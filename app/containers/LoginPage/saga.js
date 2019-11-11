@@ -19,6 +19,7 @@ export function* login() {
 
     yield put(Actions.loginSuccessAction(loginResponse));
   } catch (err) {
+    console.log(err, 'err');
     yield put(Actions.loginErrorAction(err));
   }
 }
