@@ -11,20 +11,16 @@ import { Helmet } from 'react-helmet';
 // import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
 import { CssBaseline } from '@material-ui/core';
-
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
 import HomePage from '../HomePage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import AllPosts from '../AllPosts/Loadable';
 import LoginPage from '../LoginPage/Loadable';
-
 import Layout1 from '../../components/layouts/layout1/Layout1';
 import Layout2 from '../../components/layouts/layout2/Layout2';
 import { makeSelectUserToken } from './selectors';
-
 import PrivateRoute from './PrivateRoute';
 import { AppContext } from '../context/AppContext';
 
