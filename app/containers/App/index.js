@@ -58,9 +58,7 @@ const App = () => {
                 <Route exact path="/login" component={LoginPage} />
                 <Layout1>
                   <PrivateRoute path="/dashboard" component={HomePage} />
-                  {/* <Route exact path="/dashboard" component={HomePage} /> */}
-                  {/* <Route path="/posts" component={AllPosts} /> */}
-                  {/* <Route path="/features" component={FeaturePage} /> */}
+                  <PrivateRoute path="/posts" component={AllPosts} />
                 </Layout1>
                 <Route path="" component={NotFoundPage} />
               </Switch>

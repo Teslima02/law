@@ -31,9 +31,10 @@ export function* getAllPosts() {
   const requestURL = `${BaseUrl}/posts`;
 
   try {
-    const allPostsRequ = yield call(request, requestURL);
+    const allPostsResponse = yield call(request, requestURL);
 
-    yield put(allPostsSuccess(allPostsRequ));
+    console.log(allPostsResponse, 'allPostsResponse');
+    yield put(allPostsSuccess(allPostsResponse));
   } catch (err) {
     yield put(allPostsError(err));
   }

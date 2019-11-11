@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"fmt"
 	"html"
 	"strings"
 	"time"
@@ -72,6 +73,7 @@ func (p *Post) FindAllPosts(db *gorm.DB) (*[]Post, error) {
 			}
 		}
 	}
+	fmt.Println(posts, "posts")
 	return &posts, nil
 }
 

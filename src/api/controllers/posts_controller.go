@@ -55,6 +55,10 @@ func (server *Server) CreatePost(w http.ResponseWriter, r *http.Request) {
 
 func (server *Server) GetPosts(w http.ResponseWriter, r *http.Request) {
 
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	if r.Method == "GET" {
+		w.Header().Set("Access-Control-Allow-Headers", "Authorization") // You can add more headers here if needed
+	}
 	post := models.Post{}
 
 	posts, err := post.FindAllPosts(server.DB)
@@ -62,6 +66,7 @@ func (server *Server) GetPosts(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusInternalServerError, err)
 		return
 	}
+	fmt.Println(post, "post")
 	responses.JSON(w, http.StatusOK, posts)
 }
 
