@@ -12,10 +12,10 @@ import {
   LOGIN,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
-  LOAD_USER_STATUS,
+  // LOAD_REPOS_SUCCESS,
+  // LOAD_REPOS,
+  // LOAD_REPOS_ERROR,
+  // LOAD_USER_STATUS,
 } from './constants';
 
 // The initial state of the App
