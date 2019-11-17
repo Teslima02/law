@@ -42,6 +42,7 @@ const appReducer = (state = initialState, action) =>
         };
       }
       case LOGIN_SUCCESS: {
+        localStorage.setItem('tokens', JSON.stringify(action.payload));
         return {
           loading: false,
           error: false,

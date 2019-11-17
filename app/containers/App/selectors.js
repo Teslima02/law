@@ -27,6 +27,9 @@ const makeSelectLoginDetails = () =>
     subState => subState.loginDetails,
   );
 
+const tok = localStorage.getItem('token');
+console.log(tok, 'toktoktoktok');
+
 const makeSelectUserToken = () =>
   createSelector(
     selectGlobal,
