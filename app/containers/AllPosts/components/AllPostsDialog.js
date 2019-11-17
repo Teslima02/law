@@ -7,7 +7,6 @@
 import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -27,7 +26,7 @@ import {
 import makeSelectAllPosts from '../selectors';
 import reducer from '../reducer';
 import saga from '../saga';
-import { closeNewPostDialog } from '../actions';
+import * as Actions from '../actions';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -50,6 +49,7 @@ const useStyles = makeStyles(theme => ({
 export function AllPostsDialog({
   postDialog,
   closeNewPostDialog,
+  closeEditPostDialog,
   dispatchNewPostAction,
   dispatchUpdatePostAction,
 }) {
@@ -73,15 +73,16 @@ export function AllPostsDialog({
     });
   }, [postDialog.data]);
 
-  // const closeComposeDialog = () => {
-  //   postDialog.type === 'edit' ? closeNewPostDialog : closeNewPostDialog;
-  // };
+  const closeComposeDialog = () => {
+    // eslint-disable-next-line no-unused-expressions
+    postDialog.type === 'new' ? closeNewPostDialog() : closeEditPostDialog();
+  };
 
   return (
     <div>
       <Dialog
         {...postDialog.props}
-        onClose={closeNewPostDialog}
+        onClose={closeComposeDialog}
         aria-labelledby="form-dialog-title"
         fullWidth
         maxWidth="sm"
@@ -165,7 +166,7 @@ export function AllPostsDialog({
             <Button
               onClick={() => {
                 dispatchNewPostAction(values);
-                closeNewPostDialog();
+                closeComposeDialog();
               }}
               variant="contained"
               color="primary"
@@ -173,7 +174,7 @@ export function AllPostsDialog({
               Add
             </Button>
             <Button
-              onClick={() => closeNewPostDialog()}
+              onClick={() => closeComposeDialog()}
               color="primary"
               variant="contained"
             >
@@ -185,7 +186,7 @@ export function AllPostsDialog({
             <Button
               onClick={() => {
                 dispatchUpdatePostAction(values);
-                closeNewPostDialog();
+                closeComposeDialog();
               }}
               color="primary"
               variant="contained"
@@ -193,7 +194,7 @@ export function AllPostsDialog({
               Save
             </Button>
             <Button
-              onClick={() => closeNewPostDialog()}
+              onClick={() => closeComposeDialog()}
               color="primary"
               variant="contained"
             >
@@ -209,6 +210,7 @@ export function AllPostsDialog({
 AllPostsDialog.propTypes = {
   dispatchNewPostAction: PropTypes.func,
   closeNewPostDialog: PropTypes.func,
+  closeEditPostDialog: PropTypes.func,
   postDialog: PropTypes.object,
 };
 
@@ -218,7 +220,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    closeNewPostDialog: () => dispatch(closeNewPostDialog()),
+    closeNewPostDialog: () => dispatch(Actions.closeNewPostDialog()),
+    closeEditPostDialog: () => dispatch(Actions.closeEditPostDialog()),
     dispatch,
   };
 }

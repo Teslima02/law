@@ -12,64 +12,47 @@ import { compose } from 'redux';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
-import { IconButton, Tooltip, Icon } from '@material-ui/core';
+import { IconButton, Tooltip } from '@material-ui/core';
 import { withStyles } from '@material-ui/styles';
-import { Add, CloudUpload } from '@material-ui/icons';
-import makeSelectAllPosts, {
-  makeSelectOpenNewPostDialog,
-  makeSelectPostDialog,
-} from '../selectors';
+import { Add } from '@material-ui/icons';
 import reducer from '../reducer';
 import saga from '../saga';
-import { openNewPostDialog, closeNewPostDialog } from '../actions';
+import { openNewPostDialog } from '../actions';
 
 const defaultToolbarStyles = {
   iconButton: {},
 };
 
-export function AddButton({
-  classes,
-  openNewPostDialog,
-  closeNewPostDialog,
-  postDialog,
-}) {
-  // console.log(postDialog, 'postDialog')
-  // console.log(openNewPostDialog, 'openNewPostDialog')
+// eslint-disable-next-line react/prop-types
+export function AddButton({ classes, openNewPostDialogAction }) {
   useInjectReducer({ key: 'allPosts', reducer });
   useInjectSaga({ key: 'allPosts', saga });
 
   return (
     <React.Fragment>
       <Tooltip title="Add New Post">
-        <IconButton className={classes.iconButton} onClick={openNewPostDialog}>
+        <IconButton
+          className={classes.iconButton}
+          onClick={openNewPostDialogAction}
+        >
           <Add className={classes.deleteIcon} />
         </IconButton>
       </Tooltip>
-
-      {/* <AllPostsDialog
-        postDialog={postDialog}
-        closeNewPostDialog={closeNewPostDialog}
-      /> */}
     </React.Fragment>
   );
 }
 
 AddButton.prototypes = {
   classes: PropTypes.object.isRequired,
-  openNewPostDialog: PropTypes.func,
+  openNewPostDialogAction: PropTypes.func,
   closeNewPostDialog: PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-  allPosts: makeSelectAllPosts(),
-  postDialog: makeSelectPostDialog(),
-  // openNewPostDialog: makeSelectOpenNewPostDialog(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    openNewPostDialog: () => dispatch(openNewPostDialog()),
-    // closeNewPostDialog: () => dispatch(closeNewPostDialog()),
+    openNewPostDialogAction: () => dispatch(openNewPostDialog()),
     dispatch,
   };
 }

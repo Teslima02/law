@@ -30,6 +30,7 @@ export function openNewPostDialog() {
 }
 
 export function closeNewPostDialog() {
+  console.log('yh close called')
   return {
     type: CLOSE_NEW_POST_DIALOG,
   };
