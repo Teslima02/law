@@ -14,25 +14,11 @@ import { compose } from 'redux';
 import { Grid, makeStyles } from '@material-ui/core';
 import { useInjectSaga } from '../../utils/injectSaga';
 import { useInjectReducer } from '../../utils/injectReducer';
-import {
-  makeSelectPostDialog,
-  makeSelectGetAllPosts,
-  makeSelectLoading,
-  makeSelectError,
-} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { AllPostsList } from './components/AllPostsList';
-import { AllPostsDialog } from './components/AllPostsDialog';
-import {
-  closeNewPostDialog,
-  allPosts,
-  saveNewPost,
-  openEditPostDialog,
-  closeEditPostDialog,
-  updatePost,
-  deletePost,
-} from './actions';
+import PostsList from './components/PostsList';
+import PostsDialog from './components/PostsDialog';
+import * as Actions from './actions';
 
 const useStyles = makeStyles(theme => ({
   textField: {
@@ -41,25 +27,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllPosts({
-  postDialog,
-  closeNewPostDialog,
-  dispatchAllPostsAction,
-  getAllPosts,
-  loading,
-  error,
-  dispatchNewPostAction,
-  openEditPostDialog,
-  closeEditPostDialog,
-  dispatchUpdatePostAction,
-  dispatchDeletePostAction,
-}) {
+export function AllPosts(props) {
+  const { dispatchPostsAction } = props;
   const classes = useStyles();
   useInjectReducer({ key: 'allPosts', reducer });
   useInjectSaga({ key: 'allPosts', saga });
 
   useEffect(() => {
-    dispatchAllPostsAction();
+    dispatchPostsAction();
   }, []);
 
   return (
@@ -71,58 +46,24 @@ export function AllPosts({
 
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12}>
-          <AllPostsList
-            loading={loading}
-            error={error}
-            getAllPosts={getAllPosts}
-            openEditPostDialog={openEditPostDialog}
-            dispatchDeletePostAction={dispatchDeletePostAction}
-          />
+          {/* all post component */}
+          <PostsList />
 
-          <AllPostsDialog
-            postDialog={postDialog}
-            closeNewPostDialog={closeNewPostDialog}
-            dispatchNewPostAction={dispatchNewPostAction}
-            closeEditPostDialog={closeEditPostDialog}
-            dispatchUpdatePostAction={dispatchUpdatePostAction}
-          />
+          {/* To create new post dialog */}
+          <PostsDialog />
         </Grid>
       </Grid>
     </React.Fragment>
   );
 }
 
-AllPosts.propTypes = {
-  postDialog: PropTypes.object.isRequired,
-  closeNewPostDialog: PropTypes.func.isRequired,
-  getAllPosts: PropTypes.array.isRequired,
-  dispatchAllPostsAction: PropTypes.func,
-  loading: PropTypes.bool,
-  error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  dispatchNewPostAction: PropTypes.func,
-  // openEditPostDialog: PropTypes.object,
-  openEditPostDialog: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
-  closeEditPostDialog: PropTypes.func.isRequired,
-  dispatchUpdatePostAction: PropTypes.func,
-  dispatchDeletePostAction: PropTypes.func,
-};
+AllPosts.propTypes = {};
 
-const mapStateToProps = createStructuredSelector({
-  postDialog: makeSelectPostDialog(),
-  getAllPosts: makeSelectGetAllPosts(),
-  loading: makeSelectLoading(),
-  error: makeSelectError(),
-});
+const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchDeletePostAction: evt => dispatch(deletePost(evt)),
-    dispatchUpdatePostAction: evt => dispatch(updatePost(evt)),
-    dispatchNewPostAction: evt => dispatch(saveNewPost(evt)),
-    dispatchAllPostsAction: () => dispatch(allPosts()),
-    closeNewPostDialog: () => dispatch(closeNewPostDialog()),
-    openEditPostDialog: evt => dispatch(openEditPostDialog(evt)),
-    closeEditPostDialog: () => dispatch(closeEditPostDialog()),
+    dispatchPostsAction: () => dispatch(Actions.allPosts()),
     dispatch,
   };
 }

@@ -10,8 +10,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
 import {
   TextField,
   makeStyles,
@@ -23,7 +21,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import makeSelectAllPosts from '../selectors';
+import * as Selectors from '../selectors';
 import reducer from '../reducer';
 import saga from '../saga';
 import * as Actions from '../actions';
@@ -46,16 +44,15 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllPostsDialog({
-  postDialog,
-  closeNewPostDialog,
-  closeEditPostDialog,
-  dispatchNewPostAction,
-  dispatchUpdatePostAction,
-}) {
+const PostsDialog = props => {
+  const {
+    postDialog,
+    closeNewPostDialog,
+    closeEditPostDialog,
+    dispatchNewPostAction,
+    dispatchUpdatePostAction,
+  } = props;
   const classes = useStyles();
-  useInjectReducer({ key: 'allPosts', reducer });
-  useInjectSaga({ key: 'allPosts', saga });
 
   const [values, setValues] = React.useState({
     title: '',
@@ -101,7 +98,7 @@ export function AllPostsDialog({
                 id="standard-title"
                 label="Title"
                 className={classes.textField}
-                value={values.title}
+                value={values.title || ''}
                 onChange={handleChange('title')}
                 margin="normal"
                 fullWidth
@@ -110,7 +107,7 @@ export function AllPostsDialog({
                 id="standard-title"
                 label="Description"
                 className={classes.textField}
-                value={values.desc}
+                value={values.desc || ''}
                 onChange={handleChange('desc')}
                 margin="normal"
                 fullWidth
@@ -119,7 +116,7 @@ export function AllPostsDialog({
                 id="standard-description"
                 label="Content"
                 className={classes.textField}
-                value={values.content}
+                value={values.content || ''}
                 onChange={handleChange('content')}
                 margin="normal"
                 fullWidth
@@ -207,7 +204,7 @@ export function AllPostsDialog({
   );
 }
 
-AllPostsDialog.propTypes = {
+PostsDialog.propTypes = {
   dispatchNewPostAction: PropTypes.func,
   closeNewPostDialog: PropTypes.func,
   closeEditPostDialog: PropTypes.func,
@@ -215,13 +212,16 @@ AllPostsDialog.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  allPosts: makeSelectAllPosts(),
+  postDialog: Selectors.makeSelectPostDialog(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatchNewPostAction: evt => dispatch(Actions.saveNewPost(evt)),
     closeNewPostDialog: () => dispatch(Actions.closeNewPostDialog()),
+    openEditPostDialog: evt => dispatch(Actions.openEditPostDialog(evt)),
     closeEditPostDialog: () => dispatch(Actions.closeEditPostDialog()),
+    dispatchUpdatePostAction: evt => dispatch(Actions.updatePost(evt)),
     dispatch,
   };
 }
@@ -234,4 +234,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(AllPostsDialog);
+)(PostsDialog);

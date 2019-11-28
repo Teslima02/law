@@ -46,7 +46,7 @@ const initialState = {};
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-console.log(store.getState(), 'store');
+console.log(store, 'store');
 
 const render = messages => {
   ReactDOM.render(

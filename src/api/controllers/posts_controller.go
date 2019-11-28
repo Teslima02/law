@@ -17,7 +17,13 @@ import (
 
 func (server *Server) CreatePost(w http.ResponseWriter, r *http.Request) {
 
+	vars := mux.Vars(r)
+
+	fmt.Println(vars, "save new vars")
+
 	body, err := ioutil.ReadAll(r.Body)
+
+	fmt.Println(body, "save new vars2")
 	if err != nil {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
@@ -91,6 +97,8 @@ func (server *Server) GetPost(w http.ResponseWriter, r *http.Request) {
 func (server *Server) UpdatePost(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
+
+	fmt.Println(vars, "update vars")
 
 	// Check if the post id is valid
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)

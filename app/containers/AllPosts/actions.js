@@ -30,7 +30,6 @@ export function openNewPostDialog() {
 }
 
 export function closeNewPostDialog() {
-  console.log('yh close called')
   return {
     type: CLOSE_NEW_POST_DIALOG,
   };
@@ -91,6 +90,7 @@ export function saveNewPostError(data) {
 }
 
 export function updatePost(data) {
+  console.log(data, 'update data')
   return {
     type: UPDATE_POST,
     payload: data,

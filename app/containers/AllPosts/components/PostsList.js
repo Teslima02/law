@@ -1,30 +1,14 @@
-/**
- *
- * AllPosts
- *
- */
-
 import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import { useInjectSaga } from 'utils/injectSaga';
-import { useInjectReducer } from 'utils/injectReducer';
 import { makeStyles, FormControlLabel, Icon, List } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
 import AddButton from './AddButton';
-import { makeSelectPostDialog, makeSelectGetAllPosts } from '../selectors';
-import reducer from '../reducer';
-import saga from '../saga';
-import {
-  openNewPostDialog,
-  closeNewPostDialog,
-  allPosts,
-  openEditPostDialog,
-} from '../actions';
+import * as Selectors from '../selectors';
+import * as Actions from '../actions';
 import LoadingIndicator from '../../../components/LoadingIndicator';
 
 const useStyles = makeStyles(theme => ({
@@ -45,16 +29,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export function AllPostsList({
-  getAllPosts,
-  loading,
-  error,
-  openEditPostDialog,
-  dispatchDeletePostAction,
-}) {
-  const classes = useStyles();
-  useInjectReducer({ key: 'allPosts', reducer });
-  useInjectSaga({ key: 'allPosts', saga });
+const PostsList = props => {
+  const {
+    getAllPosts,
+    loading,
+    error,
+    openEditPostDialog,
+    dispatchDeletePostAction,
+  } = props;
 
   const columns = [
     {
@@ -164,24 +146,30 @@ export function AllPostsList({
       />
     </div>
   );
-}
+};
 
-AllPostsList.propTypes = {
+PostsList.propTypes = {
   getAllPosts: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-  // openEditPostDialog: PropTypes.object,
+  dispatchDeletePostAction: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.func,
+  ]),
   openEditPostDialog: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  getAllPosts: makeSelectGetAllPosts(),
-  postDialog: makeSelectPostDialog(),
+  loading: Selectors.makeSelectLoading(),
+  error: Selectors.makeSelectError(),
+  getAllPosts: Selectors.makeSelectGetAllPosts(),
+  postDialog: Selectors.makeSelectPostDialog(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    openEditPostDialog: evt => dispatch(Actions.openEditPostDialog(evt)),
+    dispatchDeletePostAction: evt => dispatch(Actions.deletePost(evt)),
   };
 }
 
@@ -193,4 +181,4 @@ const withConnect = connect(
 export default compose(
   withConnect,
   memo,
-)(AllPostsList);
+)(PostsList);

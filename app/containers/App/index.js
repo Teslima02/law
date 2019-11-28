@@ -55,6 +55,7 @@ const App = () => {
                 <Layout1>
                   <PrivateRoute path="/dashboard" component={HomePage} />
                   <PrivateRoute path="/posts" component={AllPosts} />
+                  {/* <PrivateRoute path="/admins" component={AdminsPage} /> */}
                 </Layout1>
                 <Route path="" component={NotFoundPage} />
               </Switch>

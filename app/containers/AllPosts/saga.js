@@ -43,7 +43,7 @@ export function* getAllPosts() {
 export function* saveNewPost() {
   const newPostData = yield select(makeSelectNewPost());
 
-  const requestURL = 'http://127.0.0.1:8081/article';
+  const requestURL = `${BaseUrl}/posts`;
 
   try {
     const newPostsRequ = yield call(request, requestURL, {
@@ -62,17 +62,17 @@ export function* updatePost() {
 
   console.log(updatePostData, 'updatePostData');
 
-  const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+  // const proxyurl = 'https://cors-anywhere.herokuapp.com/';
   // const url = "https://example.com";
 
-  const requestURL = `http://127.0.0.1:8081/article/update/${
-    updatePostData.id
-  }`;
+  // const requestURL = `http://127.0.0.1:8081/posts/${updatePostData.id}`;
+
+  const requestURL = `${BaseUrl}/posts/${updatePostData.id}`;
 
   console.log(requestURL, 'requestURL');
 
   try {
-    const updatePostsRequ = yield call(request, proxyurl + requestURL, {
+    const updatePostsRequ = yield call(request, requestURL, {
       method: 'PUT',
       body: JSON.stringify(updatePostData),
       // headers: {
