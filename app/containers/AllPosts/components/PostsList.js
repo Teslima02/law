@@ -66,6 +66,14 @@ const PostsList = props => {
       },
     },
     {
+      name: 'content',
+      label: 'Content',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
       name: 'desc',
       label: 'Description',
       options: {

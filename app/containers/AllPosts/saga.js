@@ -49,6 +49,13 @@ export function* saveNewPost() {
     const newPostsRequ = yield call(request, requestURL, {
       method: 'POST',
       body: JSON.stringify(newPostData),
+      // headers: {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'application/json',
+      //   'Access-Control-Allow-Credentials': true,
+      //   // 'Access-Control-Allow-Origin': '*',
+      //   // Authorization: `Bearer ${token}`,
+      // },
     });
 
     yield put(saveNewPostSuccess(newPostsRequ));
@@ -60,26 +67,16 @@ export function* saveNewPost() {
 export function* updatePost() {
   const updatePostData = yield select(makeSelectPostData());
 
-  console.log(updatePostData, 'updatePostData');
-
-  // const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-  // const url = "https://example.com";
-
-  // const requestURL = `http://127.0.0.1:8081/posts/${updatePostData.id}`;
-
   const requestURL = `${BaseUrl}/posts/${updatePostData.id}`;
 
   console.log(requestURL, 'requestURL');
 
   try {
     const updatePostsRequ = yield call(request, requestURL, {
-      method: 'PUT',
-      body: JSON.stringify(updatePostData),
-      // headers: {
-      // Accept: 'application/json',
-      // 'Content-Type': 'application/json',
-      // Authorization: `Bearer ${token}`,
-      // },
+      method: 'OPTIONS',
+      // body: JSON.stringify(updatePostData),
+      body: updatePostData,
+      // headers: { 'content-type': 'application/x-www-form-urlencoded' },
     });
 
     yield put(updatePostSuccess(updatePostsRequ));

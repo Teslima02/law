@@ -56,7 +56,7 @@ const PostsDialog = props => {
 
   const [values, setValues] = React.useState({
     title: '',
-    desc: '',
+    // desc: '',
     content: '',
   });
 
