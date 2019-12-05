@@ -1,56 +1,41 @@
 /* eslint consistent-return:0 import/order:0 */
 
 const express = require('express');
-const logger = require('./logger');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+// const { createClient } = require('redis');
+const { v1 } = require('config');
+const apiV1 = require('./api/v1');
 
-const argv = require('./argv');
-const port = require('./port');
-const setup = require('./middlewares/frontendMiddleware');
-const isDev = process.env.NODE_ENV !== 'production';
-const ngrok =
-  (isDev && process.env.ENABLE_TUNNEL) || argv.tunnel
-    ? require('ngrok')
-    : false;
-const { resolve } = require('path');
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// If you need a backend, e.g. an API, add your custom backend-specific middleware here
-// app.use('/api', myApi);
-
-// In production we need to pass these values in instead of relying on webpack
-setup(app, {
-  outputPath: resolve(process.cwd(), 'build'),
-  publicPath: '/',
-});
-
-// get the intended host and port number, use localhost and port 3000 if not provided
-const customHost = argv.host || process.env.HOST;
-const host = customHost || null; // Let http.Server use its default IPv6/4 host
-const prettyHost = customHost || 'localhost';
-
-// use the gzipped bundle
-app.get('*.js', (req, res, next) => {
-  req.url = req.url + '.gz'; // eslint-disable-line
-  res.set('Content-Encoding', 'gzip');
+// Mongoose
+mongoose.connect(v1.STORAGE.MONGO.uri, { useNewUrlParser: true });
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+app.use((req, res, next) => {
+  res.setHeader('X-Powered-By', 'Fela');
   next();
 });
 
-// Start your app.
-app.listen(port, host, async err => {
-  if (err) {
-    return logger.error(err.message);
+// Redis, REmote DIctionary Server
+/**
+ * Access via res.locals.cache
+ */
+// const redis = createClient(v1.STORAGE.REDIS.port, v1.STORAGE.REDIS.host);
+// redis.on('error', console.error.bind(console, 'connection error:'));
+// app.locals.cache = redis;
+/* eslint-disable no-extend-native, no-restricted-syntax, guard-for-in, prefer-rest-params, no-undef */
+String.prototype.format = function form() {
+  let formatted = this;
+  for (arg in arguments) {
+    formatted = formatted.replace(`{${arg}}`, arguments[arg]);
   }
+  return formatted;
+};
 
-  // Connect to ngrok in dev mode
-  if (ngrok) {
-    let url;
-    try {
-      url = await ngrok.connect(port);
-    } catch (e) {
-      return logger.error(e);
-    }
-    logger.appStarted(port, prettyHost, url);
-  } else {
-    logger.appStarted(port, prettyHost);
-  }
-});
+apiV1(app);
+
+module.exports = app;

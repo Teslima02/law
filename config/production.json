@@ -1,0 +1,60 @@
+{
+  "v1": {
+    "STORAGE": {
+      "MONGO": {
+        "uri": "mongodb://aqua:7H!5!57H3M3RCH4N7@cluster0-shard-00-00-ixnuw.mongodb.net:27017,cluster0-shard-00-01-ixnuw.mongodb.net:27017,cluster0-shard-00-02-ixnuw.mongodb.net:27017/merchant?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true"
+      },
+      "REDIS": {
+        "url": "fela.redis.cache.windows.net",
+        "host": "127.0.0.1",
+        "port": "6379",
+        "password": "EUK3N1Ui5iXbmMViGhfxM60ZXm2hrXFeDpkQhRpc6xg="
+      }
+    },
+    "RECAPTCHA": {
+      "secret": "6Lc6sX8UAAAAAKcQlG6ukvmk2Xb72AvQObxG4JWp",
+      "verifyEndpoint": "https://www.google.com/recaptcha/api/siteverify"
+    },
+    "FB": {
+      "accountKitApiVersion": "v1.0",
+      "appId": "276149523048713",
+      "appSecret": "b0765165d255bdb21cd434c6c17726a2",
+      "meEndpointBaseUrl": "https://graph.accountkit.com/v1.0/me",
+      "tokenExchangeBaseUrl": "https://graph.accountkit.com/v1.0/access_token"
+    },
+    "INS": {
+      "key": "b226c5b4bc7a708e8943dd01da7a705b973f560b3a7d26ec07e32a057acd9d690ff446e998a90adeadb64f2d95dee7fe12317d87251b0c4928dc6aba3cdaa261",
+      "API": {
+        "airtime_winner": "https://iamnotstupid.com/wp-json/api/v1/winners",
+        "airtime": "https://iamnotstupid.com/wp-json/api/v1/vend/airtime",
+        "data": "https://iamnotstupid.com/wp-json/api/v1/vend/data",
+        "power": "https://iamnotstupid.com/wp-json/api/v1/vend/power"
+      }
+    },
+    "ESPI": {
+      "PBFPubKey": "FLWPUBK-72e7198e6db59c73368336cffc6dd6f1-X",
+      "PBFPivKey": "FLWSECK-a4c3c0285aa5426d6603f759fca23456-X",
+      "accountChURL": "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/resolve_account",
+      "keys": {
+        "private": "5c6bf6d5a0abbb8a9e57a1901161cba2",
+        "public": "92c5373a25cc01e8ea356336cc3684f7"
+      },
+      "API": {
+        "subAccount": {
+          "create": "https://espi.com.ng/api/subaccounts/create",
+          "edit": "https://espi.com.ng/api/subaccounts/{0}/update",
+          "delete": "https://espi.com.ng/api/subaccounts/{0}/delete"
+        },
+        "payment": {
+          "auth": "https://espi.com.ng/auth",
+          "pay": "https://espi.com.ng/api/payments/pay"
+        },
+        "wallet": {
+          "auth": "https://espi.com.ng/api/auth",
+          "status": "https://espi.com.ng/api/ewallets/{0}",
+          "approve": "https://espi.com.ng/api/users/approve"
+        }
+      }
+    }
+  }
+}

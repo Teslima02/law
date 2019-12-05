@@ -1,0 +1,74 @@
+{
+  "v1": {
+    "STORAGE": {
+      "MONGO": {
+        "uri": "mongodb://127.0.0.1:27017/mylaw"
+      },
+      "REDIS": {
+        "url": "fela.redis.cache.windows.net",
+        "host": "127.0.0.1",
+        "port": "6379",
+        "password": "EUK3N1Ui5iXbmMViGhfxM60ZXm2hrXFeDpkQhRpc6xg="
+      }
+    },
+    "fela": {
+      "token": "c9_VhXpB5v0.cwA.mfo.5TEv4O1I_C4_v3vL5N4aU_fxvOA3fGEKaTeV-mcuTEs",
+      "name": "fela_ng"
+    },
+    "RECAPTCHA": {
+      "secret": "6Lc6sX8UAAAAAKcQlG6ukvmk2Xb72AvQObxG4JWp",
+      "verifyEndpoint": "https://www.google.com/recaptcha/api/siteverify"
+    },
+    "FB": {
+      "accountKitApiVersion": "v1.0",
+      "appId": "276149523048713",
+      "appSecret": "b0765165d255bdb21cd434c6c17726a2",
+      "meEndpointBaseUrl": "https://graph.accountkit.com/v1.0/me",
+      "tokenExchangeBaseUrl": "https://graph.accountkit.com/v1.0/access_token"
+    },
+    "CSH": {
+      "API": {
+        "unitCost": "https://cashtoken.ng/index.php/apis/celdmobile/getTokenCost",
+        "buyTokens": "https://cashtoken.ng/index.php/apis/celdmobile/purchaseTokens"
+      },
+      "processorId": "11",
+      "keys": {
+        "public": "TESTPUBLICKEY02",
+        "private": "YEKCILBUPTSET6NOITCESSKIBO"
+      }
+    },
+    "INS": {
+      "key": "b226c5b4bc7a708e8943dd01da7a705b973f560b3a7d26ec07e32a057acd9d690ff446e998a90adeadb64f2d95dee7fe12317d87251b0c4928dc6aba3cdaa261",
+      "API": {
+        "airtime_winner": "https://iamnotstupid.com/wp-json/api/v1/winners",
+        "airtime": "https://iamnotstupid.com/wp-json/api/v1/vend/airtime",
+        "data": "https://iamnotstupid.com/wp-json/api/v1/vend/data",
+        "power": "https://iamnotstupid.com/wp-json/api/v1/vend/power"
+      }
+    },
+    "ESPI": {
+      "PBFPubKey": "FLWPUBK-72e7198e6db59c73368336cffc6dd6f1-X",
+      "PBFPivKey": "FLWSECK-a4c3c0285aa5426d6603f759fca23456-X",
+      "accountChURL": "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/resolve_account",
+      "keys": {
+        "private": "_key_private",
+        "public": "public_key_"
+      },
+      "API": {
+        "subAccount": {
+          "create": "https://staging.espi.com.ng/api/subaccounts/create",
+          "edit": "https://staging.espi.com.ng/api/subaccounts/{0}/update",
+          "deactivate": "https://staging.espi.com.ng/api/subaccounts/{0}/deactivate"
+        },
+        "payment": {
+          "pay": "https://staging.espi.com.ng/api/payments/pay"
+        },
+        "wallet": {
+          "auth": "https://staging.espi.com.ng/api/auth",
+          "status": "https://staging.espi.com.ng/api/ewallets/{0}",
+          "approve": "https://staging.espi.com.ng/api/users/approve"
+        }
+      }
+    }
+  }
+}

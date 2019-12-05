@@ -9,9 +9,6 @@ function createWebpackMiddleware(compiler, publicPath) {
     publicPath,
     silent: true,
     stats: 'errors-only',
-    watchOptions: {
-      poll: 100,
-    },
   });
 }
 

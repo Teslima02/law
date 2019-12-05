@@ -1,0 +1,43 @@
+{
+  "v1": {
+    "STORAGE": {
+      "MONGO": {
+        "uri": "mongodb://127.0.0.1:27017/fela-merchant"
+      },
+      "REDIS": {
+        "host": "127.0.0.1",
+        "port": "6379"
+      }
+    },
+    "RECAPTCHA": {
+      "secret": "6Lc6sX8UAAAAAKcQlG6ukvmk2Xb72AvQObxG4JWp",
+      "verifyEndpoint": "https://www.google.com/recaptcha/api/siteverify"
+    },
+    "FB": {
+      "accountKitApiVersion": "v1.0",
+      "appId": "276149523048713",
+      "appSecret": "b0765165d255bdb21cd434c6c17726a2",
+      "meEndpointBaseUrl": "https://graph.accountkit.com/v1.0/me",
+      "tokenExchangeBaseUrl": "https://graph.accountkit.com/v1.0/access_token"
+    },
+    "INS": {
+      "key": "d0030bfa06147864bc5d3c4a9eba0445d407d2d006c759b54a6329319acb339de8f6e22b8f2a2b97e6f2eefbaee5ea9eb51ef4b151dd3b648c78f3e4042d0b18"
+    },
+    "ESPI": {
+      "PBFPubKey": "FLWPUBK-72e7198e6db59c73368336cffc6dd6f1-X",
+      "PBFPivKey": "FLWSECK-a4c3c0285aa5426d6603f759fca23456-X",
+      "accountChURL": "https://ravesandboxapi.flutterwave.com/flwv3-pug/getpaidx/api/resolve_account",
+      "keys": {
+        "private": "_key_private",
+        "public": "public_key_"
+      },
+      "API": {
+        "subAccount": {
+          "create": "http://104.40.190.235:8001/api/subaccounts/create",
+          "edit": "http://104.40.190.235:8001/api/subaccounts/{0}/update",
+          "delete": "http://104.40.190.235:8001/api/subaccounts/{0}/delete"
+        }
+      }
+    }
+  }
+}
