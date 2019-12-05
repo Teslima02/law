@@ -115,18 +115,17 @@ func (server *Server) GetPost(w http.ResponseWriter, r *http.Request) {
 func (server *Server) UpdatePost(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	if r.Method == "OPTIONS" {
+	if r.Method == "PUT" {
 		w.Header().Set("Access-Control-Allow-Headers", "Authorization") // You can add more headers here if needed
 	}
 
 	vars := mux.Vars(r)
 
 	// fmt.Println(vars, "vars")
-	// fmt.Println(r.Body, "r.Body")
 
 	// Check if the post id is valid
 	pid, err := strconv.ParseUint(vars["id"], 10, 64)
-	fmt.Println(pid, "pid")
+	// fmt.Println(pid, "pid")
 	if err != nil {
 		responses.ERROR(w, http.StatusBadRequest, err)
 		return

@@ -73,9 +73,9 @@ export function* updatePost() {
 
   try {
     const updatePostsRequ = yield call(request, requestURL, {
-      method: 'OPTIONS',
-      // body: JSON.stringify(updatePostData),
-      body: updatePostData,
+      method: 'PUT',
+      body: JSON.stringify(updatePostData),
+      // body: updatePostData,
       // headers: { 'content-type': 'application/x-www-form-urlencoded' },
     });
 
@@ -86,18 +86,16 @@ export function* updatePost() {
 }
 
 export function* deletePost() {
-  const data = yield select(makeSelectPostData());
+  const updatePostData = yield select(makeSelectPostData());
 
-  console.log(data, 'data');
-
-  const requestURL = `http://127.0.0.1:8081/article/${data.id}`;
+  const requestURL = `${BaseUrl}/posts/${updatePostData.id}`;
 
   console.log(requestURL, 'requestURL');
 
   try {
     const deletePostsRequ = yield call(request, requestURL, {
       method: 'DELETE',
-      body: JSON.stringify(data.id),
+      body: JSON.stringify(updatePostData.id),
     });
 
     yield put(deletePostSuccess(deletePostsRequ));
