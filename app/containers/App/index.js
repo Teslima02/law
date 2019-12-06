@@ -50,12 +50,14 @@ const App = () => {
               </Helmet>
 
               <Switch>
-                <Route exact path="/" component={LoginPage} />
-                <Route exact path="/login" component={LoginPage} />
+                {/* <Route exact path="/" component={LoginPage} /> */}
+                {/* <Route exact path="/login" component={LoginPage} /> */}
                 <Layout1>
-                  <PrivateRoute path="/dashboard" component={HomePage} />
-                  <PrivateRoute path="/posts" component={AllPosts} />
+                  {/* <PrivateRoute path="/dashboard" component={HomePage} />
+                  <PrivateRoute path="/posts" component={AllPosts} /> */}
                   {/* <PrivateRoute path="/admins" component={AdminsPage} /> */}
+                  <Route path="/dashboard" component={HomePage} />
+                  <Route path="/" component={AllPosts} />
                 </Layout1>
                 <Route path="" component={NotFoundPage} />
               </Switch>

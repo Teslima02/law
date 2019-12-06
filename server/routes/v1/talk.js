@@ -4,72 +4,41 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Request = require('request');
 const { v1 } = require('config');
-const Account = require('../../models/v1/account');
-const Dialog = require('../../models/v1/dialog');
-const apiKeys = require('../../helpers/v1/keys');
+const Account = require('../../models/v1/talk');
 const router = Router();
 
 /* eslint-disable no-underscore-dangle */
 router.get(
   '/',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    Account.find({ roleId: 'agent' }).exec((err, agents) => {
+    Account.find().exec((err, talks) => {
       if (err) {
         res.json(400, err);
         return;
       }
-      res.json(agents);
+      res.json(talks);
     });
   },
 );
 
-function generatePin() {
-  let numb = '';
-  const possible = '0123456789';
-  for (let i = 0; i < 10; i++)
-    numb += possible.charAt(Math.floor(Math.random() * possible.length));
-
-  return numb;
-}
-
 router.post(
   '/',
-  passport.authenticate('jwt', { session: false }),
+  // passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    // const {
-    //   firstName,
-    //   middleName,
-    //   lastName,
-    //   username,
-    //   email,
-    //   phone,
-    //   accountName,
-    //   accountNumber,
-    //   address,
-    //   country,
-    //   state,
-    //   lga,
-    //   roleId = 'agent',
-    // } = req.body;
+    const { title, content } = req.body;
 
-    const newUser = req.body;
-    newUser.roleId = 'agent';
-    // newUser.roleId = 'customer';
-    newUser.createdBy = req.user._id;
-    // newUser.walletId = generatePin();
-    console.log(newUser, 'newUser');
-
-    Account.register(new Account(newUser), 'password', async (err, agent) => {
+    const newTalk = new Account();
+    newTalk.title = title;
+    newTalk.content = content;
+    newTalk.save((err, talk) => {
       if (err) {
-        res.status(400).send('User Failed to save');
+        res.status(400).send('Unable to create talk');
       } else {
-        agent.wallet.walletId = generatePin();
-        agent.save();
         res.status(200).json({
           success: true,
-          message: 'Agent Created Successfully',
-          agent,
+          message: 'Talk Created Successfully',
+          talk,
         });
       }
     });
@@ -137,70 +106,43 @@ router.get(
           res.json(404, { message: 'Account not found!' });
           return;
         }
-        res.json({
-          Account,
-          services: apiKeys[Account.helperKey].services.map(s => s.type),
-        });
+        // res.json({
+        //   Account,
+        //   services: apiKeys[Account.helperKey].services.map(s => s.type),
+        // });
       });
   },
 );
 
-router.post(
-  '/:id/dialogs',
-  passport.authenticate('jwt', { session: false }),
-  async (req, res) => {
-    const { dialogs, type } = req.body;
-    const { id } = req.params;
-    Account.findById(id, async (err, Account) => {
-      if (err || !Account) {
-        res.json(400, err);
-        return;
-      }
-      // ! remove deleted dialogs
+// router.post(
+//   '/:id/dialogs',
+//   passport.authenticate('jwt', { session: false }),
+//   async (req, res) => {
+//     const { dialogs, type } = req.body;
+//     const { id } = req.params;
+//     Account.findById(id, async (err, Account) => {
+//       if (err || !Account) {
+//         res.json(400, err);
+//         return;
+//       }
+//       // ! remove deleted dialogs
 
-      const created = dialogs.map(d => {
-        if (d._id) {
-          return Dialog.findByIdAndUpdate(d._id, d, { new: true });
-        }
-        return Dialog.create({
-          ...d,
-          businessType: type,
-          Account: mongoose.Types.ObjectId(id),
-        });
-      });
+//       const created = dialogs.map(d => {
+//         if (d._id) {
+//           return Dialog.findByIdAndUpdate(d._id, d, { new: true });
+//         }
+//         return Dialog.create({
+//           ...d,
+//           businessType: type,
+//           Account: mongoose.Types.ObjectId(id),
+//         });
+//       });
 
-      res.json({ dialogs: await Promise.all(created), type });
-    });
-  },
-);
+//       res.json({ dialogs: await Promise.all(created), type });
+//     });
+//   },
+// );
 
-router.get(
-  '/:id/dialogs',
-  passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Account.findById(req.params.id, async (err, Account) => {
-      if (err || !Account) {
-        res.json(400, err);
-        return;
-      }
-      const dialogs = [];
-      const { services } = apiKeys[Account.helperKey];
-      services.every(ser =>
-        dialogs.push([
-          ser.type,
-          Dialog.find({
-            businessType: ser.type,
-            Account: Account._id,
-          }),
-        ]),
-      );
-
-      res.json(
-        _.fromPairs(await Promise.all(dialogs.map(d => Promise.all(d)))),
-      );
-    });
-  },
-);
 
 router.delete(
   '/',
@@ -237,10 +179,10 @@ router.put(
       subAccountId,
     } = req.body;
 
-    if (!apiKeys[helperKey]) {
-      res.json(404, { message: 'API key not found!' });
-      return;
-    }
+    // if (!apiKeys[helperKey]) {
+    //   res.json(404, { message: 'API key not found!' });
+    //   return;
+    // }
     const { accountChURL, PBFPubKey, API } = v1.ESPI;
     Request.post(
       {
