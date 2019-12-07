@@ -3,6 +3,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 // const { createClient } = require('redis');
 const { v1 } = require('config');
 const apiV1 = require('./api/v1');
@@ -10,6 +11,7 @@ const apiV1 = require('./api/v1');
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 // Mongoose
 mongoose.connect(v1.STORAGE.MONGO.uri, { useNewUrlParser: true });

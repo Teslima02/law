@@ -28,7 +28,7 @@ import { BaseUrl } from '../../components/BaseUrl';
 
 // Individual exports for testing
 export function* getAllPosts() {
-  const requestURL = `${BaseUrl}/posts`;
+  const requestURL = `${BaseUrl}/talk`;
 
   try {
     const allPostsResponse = yield call(request, requestURL);
@@ -43,19 +43,20 @@ export function* getAllPosts() {
 export function* saveNewPost() {
   const newPostData = yield select(makeSelectNewPost());
 
-  const requestURL = `${BaseUrl}/posts`;
+  console.log(newPostData, 'newPostData')
+  const requestURL = `${BaseUrl}/talk`;
 
   try {
     const newPostsRequ = yield call(request, requestURL, {
       method: 'POST',
       body: JSON.stringify(newPostData),
-      // headers: {
-      //   Accept: 'application/json',
-      //   'Content-Type': 'application/json',
-      //   'Access-Control-Allow-Credentials': true,
-      //   // 'Access-Control-Allow-Origin': '*',
-      //   // Authorization: `Bearer ${token}`,
-      // },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
+        // 'Access-Control-Allow-Origin': '*',
+        // Authorization: `Bearer ${token}`,
+      },
     });
 
     yield put(saveNewPostSuccess(newPostsRequ));

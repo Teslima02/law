@@ -8,42 +8,34 @@ const Account = require('../../models/v1/talk');
 const router = Router();
 
 /* eslint-disable no-underscore-dangle */
-router.get(
-  '/',
-  // passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    Account.find().exec((err, talks) => {
-      if (err) {
-        res.json(400, err);
-        return;
-      }
-      res.json(talks);
-    });
-  },
-);
+router.get('/', (req, res) => {
+  Account.find().exec((err, talks) => {
+    if (err) {
+      res.json(400, err);
+      return;
+    }
+    res.json(talks);
+  });
+});
 
-router.post(
-  '/',
-  // passport.authenticate('jwt', { session: false }),
-  (req, res) => {
-    const { title, content } = req.body;
+router.post('/', (req, res) => {
+  const { title, content } = req.body;
 
-    const newTalk = new Account();
-    newTalk.title = title;
-    newTalk.content = content;
-    newTalk.save((err, talk) => {
-      if (err) {
-        res.status(400).send('Unable to create talk');
-      } else {
-        res.status(200).json({
-          success: true,
-          message: 'Talk Created Successfully',
-          talk,
-        });
-      }
-    });
-  },
-);
+  const newTalk = new Account();
+  newTalk.title = title;
+  newTalk.content = content;
+  newTalk.save((err, talk) => {
+    if (err) {
+      res.status(400).send('Unable to create talk');
+    } else {
+      res.status(200).json({
+        success: true,
+        message: 'Talk Created Successfully',
+        talk,
+      });
+    }
+  });
+});
 
 router.post(
   '/customer',
@@ -104,7 +96,6 @@ router.get(
         }
         if (!Account) {
           res.json(404, { message: 'Account not found!' });
-          return;
         }
         // res.json({
         //   Account,
@@ -142,7 +133,6 @@ router.get(
 //     });
 //   },
 // );
-
 
 router.delete(
   '/',
