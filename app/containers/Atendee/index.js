@@ -4,11 +4,10 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -17,11 +16,19 @@ import { useInjectReducer } from 'utils/injectReducer';
 import makeSelectAtendee from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+import AttendeeList from './components/AttendeeList';
+import * as Actions from './actions';
+import AttendeeDialog from './components/AttendeeDialog';
 
-export function Atendee() {
+export function Atendee(props) {
+  const { dispatchAttendeesAction } = props;
   useInjectReducer({ key: 'atendee', reducer });
   useInjectSaga({ key: 'atendee', saga });
+
+  useEffect(() => {
+    dispatchAttendeesAction();
+  }, []);
+
 
   return (
     <div>
@@ -29,13 +36,19 @@ export function Atendee() {
         <title>Atendee</title>
         <meta name="description" content="Description of Atendee" />
       </Helmet>
-      <FormattedMessage {...messages.header} />
+      <AttendeeList />
+
+      <AttendeeDialog />
     </div>
   );
 }
 
 Atendee.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatchAttendeesAction: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.array,
+  ]),
+  // dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -44,6 +57,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    dispatchAttendeesAction: () => dispatch(Actions.allAttendees()),
     dispatch,
   };
 }

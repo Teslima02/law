@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 
 const AttendeeList = props => {
   const {
-    getAllPosts,
+    getAllAttendees,
     loading,
     error,
     openEditPostDialog,
@@ -58,16 +58,32 @@ const AttendeeList = props => {
       },
     },
     {
-      name: 'title',
-      label: 'Tittle',
+      name: 'firstName',
+      label: 'First Name',
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: 'content',
-      label: 'Content',
+      name: 'lastName',
+      label: 'Last Name',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'email',
+      label: 'Email',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'address',
+      label: 'Address',
       options: {
         filter: true,
         sort: false,
@@ -81,7 +97,7 @@ const AttendeeList = props => {
         sort: false,
         customBodyRender: value => {
           // eslint-disable-next-line no-underscore-dangle
-          const Post = getAllPosts.find(post => value === post._id);
+          const Post = getAllAttendees.find(post => value === post._id);
 
           if (value === '') {
             return '';
@@ -107,7 +123,7 @@ const AttendeeList = props => {
         sort: false,
         customBodyRender: value => {
           // eslint-disable-next-line no-underscore-dangle
-          const Post = getAllPosts.find(post => value === post._id);
+          const Post = getAllAttendees.find(post => value === post._id);
 
           if (value === '') {
             return '';
@@ -141,8 +157,8 @@ const AttendeeList = props => {
   return (
     <div>
       <MUIDataTable
-        title="All Talks"
-        data={getAllPosts}
+        title="All Attendees"
+        data={getAllAttendees}
         columns={columns}
         options={options}
       />
@@ -151,7 +167,7 @@ const AttendeeList = props => {
 };
 
 AttendeeList.propTypes = {
-  getAllPosts: PropTypes.array.isRequired,
+  getAllAttendees: PropTypes.array.isRequired,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dispatchDeletePostAction: PropTypes.oneOfType([
@@ -164,14 +180,14 @@ AttendeeList.propTypes = {
 const mapStateToProps = createStructuredSelector({
   loading: Selectors.makeSelectLoading(),
   error: Selectors.makeSelectError(),
-  getAllPosts: Selectors.makeSelectGetAllPosts(),
-  postDialog: Selectors.makeSelectPostDialog(),
+  getAllAttendees: Selectors.makeSelectGetAllAttendees(),
+  postDialog: Selectors.makeSelectAttendeeDialog(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    openEditPostDialog: evt => dispatch(Actions.openEditPostDialog(evt)),
-    dispatchDeletePostAction: evt => dispatch(Actions.deletePost(evt)),
+    openEditPostDialog: evt => dispatch(Actions.openEditAttendeeDialog(evt)),
+    dispatchDeletePostAction: evt => dispatch(Actions.deleteAttendee(evt)),
   };
 }
 

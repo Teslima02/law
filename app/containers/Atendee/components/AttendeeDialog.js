@@ -1,6 +1,6 @@
 /**
  *
- * AllPosts
+ * AllAttendees
  *
  */
 
@@ -46,18 +46,20 @@ const useStyles = makeStyles(theme => ({
 
 const AttendeeDialog = props => {
   const {
-    postDialog,
-    closeNewPostDialog,
-    closeEditPostDialog,
-    dispatchNewPostAction,
-    dispatchUpdatePostAction,
+    attendeeDialog,
+    closeNewAttendeeDialog,
+    closeEditAttendeeDialog,
+    dispatchNewAttendeeAction,
+    dispatchUpdateAttendeeAction,
   } = props;
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
-    title: '',
-    // desc: '',
-    content: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    address: '',
   });
 
   const handleChange = name => event => {
@@ -66,19 +68,21 @@ const AttendeeDialog = props => {
 
   useEffect(() => {
     setValues({
-      ...postDialog.data,
+      ...attendeeDialog.data,
     });
-  }, [postDialog.data]);
+  }, [attendeeDialog.data]);
 
   const closeComposeDialog = () => {
     // eslint-disable-next-line no-unused-expressions
-    postDialog.type === 'new' ? closeNewPostDialog() : closeEditPostDialog();
+    attendeeDialog.type === 'new'
+      ? closeNewAttendeeDialog()
+      : closeEditAttendeeDialog();
   };
 
   return (
     <div>
       <Dialog
-        {...postDialog.props}
+        {...attendeeDialog.props}
         onClose={closeComposeDialog}
         aria-labelledby="form-dialog-title"
         fullWidth
@@ -87,64 +91,100 @@ const AttendeeDialog = props => {
         <AppBar position="static" elevation={1}>
           <Toolbar>
             <Typography variant="h6">
-              {postDialog.type === 'new' ? 'New Post' : 'Edit Post'}
+              {attendeeDialog.type === 'new' ? 'New Attendee' : 'Edit Attendee'}
             </Typography>
           </Toolbar>
         </AppBar>
         <DialogContent>
-          {postDialog.type === 'new' ? (
+          {attendeeDialog.type === 'new' ? (
             <div>
               <TextField
-                id="standard-title"
-                label="Title"
+                id="standard-firstName"
+                label="First Name"
                 className={classes.textField}
-                value={values.title || ''}
-                onChange={handleChange('title')}
+                value={values.firstName || ''}
+                onChange={handleChange('firstName')}
                 margin="normal"
                 fullWidth
               />
               <TextField
-                id="standard-description"
-                label="Content"
+                id="standard-lastName"
+                label="Last Name"
                 className={classes.textField}
-                value={values.content || ''}
-                onChange={handleChange('content')}
+                value={values.lastName || ''}
+                onChange={handleChange('lastName')}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                id="standard-email"
+                label="Email"
+                className={classes.textField}
+                value={values.email || ''}
+                onChange={handleChange('email')}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                id="standard-address"
+                label="address"
+                className={classes.textField}
+                value={values.address || ''}
+                onChange={handleChange('address')}
                 margin="normal"
                 fullWidth
                 multiline
-                rows="4"
+                rows="2"
               />
             </div>
           ) : (
             <div>
               <TextField
-                id="standard-title"
-                label="Title"
+                id="standard-firstName"
+                label="First Name"
                 className={classes.textField}
-                value={values.title}
-                onChange={handleChange('title')}
+                value={values.firstName || ''}
+                onChange={handleChange('firstName')}
                 margin="normal"
                 fullWidth
               />
               <TextField
-                id="standard-description"
-                label="Content"
+                id="standard-lastName"
+                label="Last Name"
                 className={classes.textField}
-                value={values.content}
-                onChange={handleChange('content')}
+                value={values.lastName || ''}
+                onChange={handleChange('lastName')}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                id="standard-email"
+                label="Email"
+                className={classes.textField}
+                value={values.email || ''}
+                onChange={handleChange('email')}
+                margin="normal"
+                fullWidth
+              />
+              <TextField
+                id="standard-address"
+                label="address"
+                className={classes.textField}
+                value={values.address || ''}
+                onChange={handleChange('address')}
                 margin="normal"
                 fullWidth
                 multiline
-                rows="4"
+                rows="2"
               />
             </div>
           )}
         </DialogContent>
-        {postDialog.type === 'new' ? (
+        {attendeeDialog.type === 'new' ? (
           <DialogActions>
             <Button
               onClick={() => {
-                dispatchNewPostAction(values);
+                dispatchNewAttendeeAction(values);
                 closeComposeDialog();
               }}
               variant="contained"
@@ -164,7 +204,7 @@ const AttendeeDialog = props => {
           <DialogActions>
             <Button
               onClick={() => {
-                dispatchUpdatePostAction(values);
+                dispatchUpdateAttendeeAction(values);
                 closeComposeDialog();
               }}
               color="primary"
@@ -184,26 +224,27 @@ const AttendeeDialog = props => {
       </Dialog>
     </div>
   );
-}
+};
 
 AttendeeDialog.propTypes = {
-  dispatchNewPostAction: PropTypes.func,
-  closeNewPostDialog: PropTypes.func,
-  closeEditPostDialog: PropTypes.func,
-  postDialog: PropTypes.object,
+  dispatchNewAttendeeAction: PropTypes.func,
+  closeNewAttendeeDialog: PropTypes.func,
+  closeEditAttendeeDialog: PropTypes.func,
+  attendeeDialog: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  postDialog: Selectors.makeSelectPostDialog(),
+  attendeeDialog: Selectors.makeSelectAttendeeDialog(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatchNewPostAction: evt => dispatch(Actions.saveNewPost(evt)),
-    closeNewPostDialog: () => dispatch(Actions.closeNewPostDialog()),
-    openEditPostDialog: evt => dispatch(Actions.openEditPostDialog(evt)),
-    closeEditPostDialog: () => dispatch(Actions.closeEditPostDialog()),
-    dispatchUpdatePostAction: evt => dispatch(Actions.updatePost(evt)),
+    dispatchNewAttendeeAction: evt => dispatch(Actions.saveNewAttendee(evt)),
+    closeNewAttendeeDialog: () => dispatch(Actions.closeNewAttendeeDialog()),
+    openEditAttendeeDialog: evt =>
+      dispatch(Actions.openEditAttendeeDialog(evt)),
+    closeEditAttendeeDialog: () => dispatch(Actions.closeEditAttendeeDialog()),
+    dispatchUpdateAttendeeAction: evt => dispatch(Actions.updateAttendee(evt)),
     dispatch,
   };
 }

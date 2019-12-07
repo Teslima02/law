@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const Talk = require('../../models/v1/talk');
+const Attendee = require('../../models/v1/attendee');
 const router = Router();
 
 /* eslint-disable no-underscore-dangle */
 router.get('/', (req, res) => {
-  Talk.find().exec((err, talks) => {
+  Attendee.find().exec((err, talks) => {
     if (err) {
       res.json(400, err);
       return;
@@ -14,12 +14,14 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  const { title, content } = req.body;
+  const { firstName, lastName, email, address } = req.body;
 
-  const newTalk = new Talk();
-  newTalk.title = title;
-  newTalk.content = content;
-  newTalk.save((err, data) => {
+  const newAttendee = new Attendee();
+  newAttendee.firstName = firstName;
+  newAttendee.lastName = lastName;
+  newAttendee.email = email;
+  newAttendee.address = address;
+  newAttendee.save((err, data) => {
     if (err) {
       res.status(400).send('Unable to create talk');
     } else {
@@ -34,11 +36,11 @@ router.post('/', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  const { title, content } = req.body;
+  const { firstName, lastName, email, address } = req.body;
 
-  Talk.findByIdAndUpdate(
+  Attendee.findByIdAndUpdate(
     id,
-    { title, content },
+    { firstName, lastName, email, address },
     { new: true },
     (err, data) => {
       if (err) {
@@ -59,7 +61,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  Talk.remove({ _id: { $in: id } }, err => {
+  Attendee.remove({ _id: { $in: id } }, err => {
     if (err) {
       res.status(400).json({
         success: false,

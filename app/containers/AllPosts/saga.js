@@ -1,11 +1,4 @@
-import {
-  take,
-  call,
-  put,
-  select,
-  takeLatest,
-  actionChannel,
-} from 'redux-saga/effects';
+import { call, put, select, takeLatest } from 'redux-saga/effects';
 import {
   GET_ALL_POSTS,
   SAVE_NEW_POST,
@@ -15,7 +8,7 @@ import {
 import request from '../../utils/request';
 import * as Actions from './actions';
 
-import { makeSelectNewPost, makeSelectPostData } from './selectors';
+import * as Selectors from './selectors';
 import { BaseUrl } from '../../components/BaseUrl';
 
 // Individual exports for testing
@@ -33,7 +26,7 @@ export function* getAllPosts() {
 }
 
 export function* saveNewPost() {
-  const newPostData = yield select(makeSelectNewPost());
+  const newPostData = yield select(Selectors.makeSelectNewPost());
 
   const requestURL = `${BaseUrl}/talk`;
 
@@ -58,7 +51,7 @@ export function* saveNewPost() {
 }
 
 export function* updatePost() {
-  const updatePostData = yield select(makeSelectPostData());
+  const updatePostData = yield select(Selectors.makeSelectPostData());
 
   // eslint-disable-next-line no-underscore-dangle
   const requestURL = `${BaseUrl}/talk/${updatePostData._id}`;
@@ -84,7 +77,7 @@ export function* updatePost() {
 }
 
 export function* deletePost() {
-  const updatePostData = yield select(makeSelectPostData());
+  const updatePostData = yield select(Selectors.makeSelectPostData());
 
   // eslint-disable-next-line no-underscore-dangle
   const requestURL = `${BaseUrl}/talk/${updatePostData._id}`;

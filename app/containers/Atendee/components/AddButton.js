@@ -17,14 +17,14 @@ import { withStyles } from '@material-ui/styles';
 import { Add } from '@material-ui/icons';
 import reducer from '../reducer';
 import saga from '../saga';
-import { openNewPostDialog } from '../actions';
+import * as Actions from '../actions';
 
 const defaultToolbarStyles = {
   iconButton: {},
 };
 
 // eslint-disable-next-line react/prop-types
-export function AddButton({ classes, openNewPostDialogAction }) {
+export function AddButton({ classes, openNewAttendeeDialogAction }) {
   useInjectReducer({ key: 'allPosts', reducer });
   useInjectSaga({ key: 'allPosts', saga });
 
@@ -33,7 +33,7 @@ export function AddButton({ classes, openNewPostDialogAction }) {
       <Tooltip title="Add New Post">
         <IconButton
           className={classes.iconButton}
-          onClick={openNewPostDialogAction}
+          onClick={openNewAttendeeDialogAction}
         >
           <Add className={classes.deleteIcon} />
         </IconButton>
@@ -44,15 +44,15 @@ export function AddButton({ classes, openNewPostDialogAction }) {
 
 AddButton.prototypes = {
   classes: PropTypes.object.isRequired,
-  openNewPostDialogAction: PropTypes.func,
-  closeNewPostDialog: PropTypes.func,
+  openNewAttendeeDialogAction: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({});
 
 function mapDispatchToProps(dispatch) {
   return {
-    openNewPostDialogAction: () => dispatch(openNewPostDialog()),
+    openNewAttendeeDialogAction: () =>
+      dispatch(Actions.openNewAttendeeDialog()),
     dispatch,
   };
 }

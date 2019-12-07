@@ -68,9 +68,9 @@ export {
   makeSelectPostData,
   makeSelectEditPost,
   makeSelectNewPost,
-  selectAllPostsDomain,
   makeSelectPostDialog,
   makeSelectGetAllPosts,
   makeSelectLoading,
   makeSelectError,
+  selectAllPostsDomain,
 };

@@ -57,7 +57,9 @@ export function AllPosts(props) {
   );
 }
 
-AllPosts.propTypes = {};
+AllPosts.propTypes = {
+  dispatchPostsAction: PropTypes.oneOfType([PropTypes.func, PropTypes.array]),
+};
 
 const mapStateToProps = createStructuredSelector({});
 

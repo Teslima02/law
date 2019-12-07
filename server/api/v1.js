@@ -8,6 +8,7 @@ const { Strategy } = require('passport-local');
 
 // Routes
 const Talk = require('../routes/v1/talk');
+const Attendee = require('../routes/v1/attendee');
 
 // Account model
 // const Account = require('../models/v1/attendee');
@@ -34,4 +35,5 @@ module.exports = function init(app) {
 
   // If you need a backend, e.g. an API, add your custom backend-specific   middleware here
   app.use('/api/v1/talk', Talk);
+  app.use('/api/v1/attendee', Attendee);
 };
