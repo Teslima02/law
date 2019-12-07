@@ -90,7 +90,6 @@ export function saveNewPostError(data) {
 }
 
 export function updatePost(data) {
-  console.log(data, 'update data')
   return {
     type: UPDATE_POST,
     payload: data,
@@ -112,7 +111,6 @@ export function updatePostError(data) {
 }
 
 export function deletePost(data) {
-  console.log(data, 'data')
   return {
     type: DELETE_POST,
     payload: data,

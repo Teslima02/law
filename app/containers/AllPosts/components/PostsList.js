@@ -40,7 +40,7 @@ const PostsList = props => {
 
   const columns = [
     {
-      name: 'Id',
+      name: '_id',
       label: 'S/N',
       options: {
         filter: true,
@@ -74,21 +74,14 @@ const PostsList = props => {
       },
     },
     {
-      name: 'desc',
-      label: 'Description',
-      options: {
-        filter: true,
-        sort: false,
-      },
-    },
-    {
-      name: 'id',
+      name: '_id',
       label: 'Edit',
       options: {
         filter: true,
         sort: false,
         customBodyRender: value => {
-          const Post = getAllPosts.find(post => value === post.id);
+          // eslint-disable-next-line no-underscore-dangle
+          const Post = getAllPosts.find(post => value === post._id);
 
           if (value === '') {
             return '';
@@ -107,13 +100,14 @@ const PostsList = props => {
       },
     },
     {
-      name: 'id',
+      name: '_id',
       label: 'Delete',
       options: {
         filter: true,
         sort: false,
         customBodyRender: value => {
-          const Post = getAllPosts.find(post => value === post.id);
+          // eslint-disable-next-line no-underscore-dangle
+          const Post = getAllPosts.find(post => value === post._id);
 
           if (value === '') {
             return '';

@@ -13,16 +13,8 @@ import {
   DELETE_POST,
 } from './constants';
 import request from '../../utils/request';
-import {
-  allPosts,
-  allPostsSuccess,
-  allPostsError,
-  saveNewPostSuccess,
-  saveNewPostError,
-  updatePostSuccess,
-  updatePostError,
-  deletePostSuccess,
-} from './actions';
+import * as Actions from './actions';
+
 import { makeSelectNewPost, makeSelectPostData } from './selectors';
 import { BaseUrl } from '../../components/BaseUrl';
 
@@ -34,16 +26,15 @@ export function* getAllPosts() {
     const allPostsResponse = yield call(request, requestURL);
 
     console.log(allPostsResponse, 'allPostsResponse');
-    yield put(allPostsSuccess(allPostsResponse));
+    yield put(Actions.allPostsSuccess(allPostsResponse));
   } catch (err) {
-    yield put(allPostsError(err));
+    yield put(Actions.allPostsError(err));
   }
 }
 
 export function* saveNewPost() {
   const newPostData = yield select(makeSelectNewPost());
 
-  console.log(newPostData, 'newPostData')
   const requestURL = `${BaseUrl}/talk`;
 
   try {
@@ -59,49 +50,56 @@ export function* saveNewPost() {
       },
     });
 
-    yield put(saveNewPostSuccess(newPostsRequ));
+    yield put(Actions.allPosts());
+    yield put(Actions.saveNewPostSuccess(newPostsRequ.data));
   } catch (err) {
-    yield put(saveNewPostError(err));
+    yield put(Actions.saveNewPostError(err));
   }
 }
 
 export function* updatePost() {
   const updatePostData = yield select(makeSelectPostData());
 
-  const requestURL = `${BaseUrl}/posts/${updatePostData.id}`;
-
-  console.log(requestURL, 'requestURL');
+  // eslint-disable-next-line no-underscore-dangle
+  const requestURL = `${BaseUrl}/talk/${updatePostData._id}`;
 
   try {
     const updatePostsRequ = yield call(request, requestURL, {
       method: 'PUT',
       body: JSON.stringify(updatePostData),
-      // body: updatePostData,
-      // headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
+        // 'Access-Control-Allow-Origin': '*',
+        // Authorization: `Bearer ${token}`,
+      },
     });
 
-    yield put(updatePostSuccess(updatePostsRequ));
+    yield put(Actions.allPosts());
+    yield put(Actions.updatePostSuccess(updatePostsRequ.data));
   } catch (err) {
-    yield put(updatePostError(err));
+    yield put(Actions.updatePostError(err));
   }
 }
 
 export function* deletePost() {
   const updatePostData = yield select(makeSelectPostData());
 
-  const requestURL = `${BaseUrl}/posts/${updatePostData.id}`;
-
-  console.log(requestURL, 'requestURL');
+  // eslint-disable-next-line no-underscore-dangle
+  const requestURL = `${BaseUrl}/talk/${updatePostData._id}`;
 
   try {
     const deletePostsRequ = yield call(request, requestURL, {
       method: 'DELETE',
-      body: JSON.stringify(updatePostData.id),
+      // eslint-disable-next-line no-underscore-dangle
+      body: JSON.stringify(updatePostData._id),
     });
 
-    yield put(deletePostSuccess(deletePostsRequ));
+    yield put(Actions.allPosts());
+    yield put(Actions.deletePostSuccess(deletePostsRequ));
   } catch (err) {
-    yield put(updatePostError(err));
+    yield put(Actions.updatePostError(err));
   }
 }
 

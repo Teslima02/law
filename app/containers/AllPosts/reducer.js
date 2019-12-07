@@ -104,7 +104,7 @@ const allPostsReducer = (state = initialState, action) =>
           ...state,
           loading: false,
           error: false,
-          getAllPosts: state.getAllPosts.concat(action.payload),
+          // getAllPosts: state.getAllPosts.concat(action.payload),
         };
       }
       case SAVE_NEW_POST_ERROR: {
@@ -151,7 +151,7 @@ const allPostsReducer = (state = initialState, action) =>
           ...state,
           loading: false,
           error: false,
-          getAllPosts: state.getAllPosts.concat(action.payload),
+          // getAllPosts: state.getAllPosts.concat(action.payload),
         };
       }
       case UPDATE_POST_ERROR: {
@@ -174,7 +174,7 @@ const allPostsReducer = (state = initialState, action) =>
           ...state,
           loading: false,
           error: false,
-          getAllPosts: state.getAllPosts.concat(action.payload),
+          // getAllPosts: state.getAllPosts.concat(action.payload),
         };
       }
       case DELETE_POST_ERROR: {

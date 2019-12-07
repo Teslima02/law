@@ -104,15 +104,6 @@ const PostsDialog = props => {
                 fullWidth
               />
               <TextField
-                id="standard-title"
-                label="Description"
-                className={classes.textField}
-                value={values.desc || ''}
-                onChange={handleChange('desc')}
-                margin="normal"
-                fullWidth
-              />
-              <TextField
                 id="standard-description"
                 label="Content"
                 className={classes.textField}
@@ -132,15 +123,6 @@ const PostsDialog = props => {
                 className={classes.textField}
                 value={values.title}
                 onChange={handleChange('title')}
-                margin="normal"
-                fullWidth
-              />
-              <TextField
-                id="standard-title"
-                label="Description"
-                className={classes.textField}
-                value={values.desc}
-                onChange={handleChange('desc')}
                 margin="normal"
                 fullWidth
               />
