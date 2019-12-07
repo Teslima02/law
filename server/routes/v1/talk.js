@@ -64,7 +64,6 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   const { id } = req.params;
-  console.log(id, 'delete id')
   Account.remove({ _id: { $in: id } }, err => {
     if (err) {
       res.status(400).json({

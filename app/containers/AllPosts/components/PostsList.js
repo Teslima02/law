@@ -141,7 +141,7 @@ const PostsList = props => {
   return (
     <div>
       <MUIDataTable
-        title="All Posts"
+        title="All Talks"
         data={getAllPosts}
         columns={columns}
         options={options}
