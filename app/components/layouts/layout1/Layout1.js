@@ -160,8 +160,8 @@ const Layout1 = props => {
 
   const navigation = [
     { id: 1, name: 'dashboard', link: '/dashboard' },
-    { id: 2, name: 'post', link: '/posts' },
-    // { id: 3, name: 'Admins', link: '/admins' },
+    { id: 2, name: 'Talk', link: '/talks' },
+    { id: 3, name: 'Attendee', link: '/attendees' },
   ];
 
   const menuId = 'primary-search-account-menu';
@@ -321,7 +321,7 @@ const Layout1 = props => {
             </ListItem>
           ))}
         </List>
-        <Divider />
+        {/* <Divider />
         <List>
           {['All mail', 'Trash', 'Spam'].map((text, index) => (
             <ListItem button key={text}>
@@ -331,7 +331,7 @@ const Layout1 = props => {
               <ListItemText primary={text} />
             </ListItem>
           ))}
-        </List>
+        </List> */}
       </Drawer>
 
       <Grid container className={classes.root}>
