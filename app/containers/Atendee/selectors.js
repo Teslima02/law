@@ -63,9 +63,8 @@ const makeSelectAttendeeData = () =>
     subState => subState.attendeeData,
   );
 
-
 export default makeSelectAtendee;
-export { 
+export {
   makeSelectAttendeeData,
   makeSelectEditAttendee,
   makeSelectNewAttendee,
@@ -74,4 +73,4 @@ export {
   makeSelectLoading,
   makeSelectError,
   selectAtendeeDomain,
- };
+};

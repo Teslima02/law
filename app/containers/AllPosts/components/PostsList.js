@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-
-import { makeStyles, FormControlLabel, Icon, List } from '@material-ui/core';
+import { withRouter } from 'react-router';
+import {
+  makeStyles,
+  FormControlLabel,
+  Icon,
+  List,
+  Button,
+} from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
 import AddButton from './AddButton';
 import * as Selectors from '../selectors';
@@ -31,12 +37,19 @@ const useStyles = makeStyles(theme => ({
 
 const PostsList = props => {
   const {
+    openViewAttendees,
     getAllPosts,
     loading,
     error,
     openEditPostDialog,
     dispatchDeletePostAction,
   } = props;
+
+  const handleClick = id => {
+    if (id) {
+      props.history.push(`/talk/${id}`);
+    }
+  };
 
   const columns = [
     {
@@ -71,6 +84,31 @@ const PostsList = props => {
       options: {
         filter: true,
         sort: false,
+      },
+    },
+    {
+      name: '_id',
+      label: 'View',
+      options: {
+        customBodyRender: value => {
+          // eslint-disable-next-line no-underscore-dangle
+          const getTalkID = getAllPosts.find(user => user._id === value);
+
+          return (
+            <Button
+              color="primary"
+              onClick={ev => {
+                ev.stopPropagation();
+                openViewAttendees(getTalkID);
+                // eslint-disable-next-line no-underscore-dangle
+                handleClick(getTalkID._id);
+              }}
+            >
+              <Icon>visibility</Icon>
+              view
+            </Button>
+          );
+        },
       },
     },
     {
@@ -151,7 +189,8 @@ const PostsList = props => {
 };
 
 PostsList.propTypes = {
-  getAllPosts: PropTypes.array.isRequired,
+  openViewAttendees: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  getAllPosts: PropTypes.array,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dispatchDeletePostAction: PropTypes.oneOfType([
@@ -170,6 +209,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    openViewAttendees: evt => dispatch(Actions.viewAttendees(evt)),
     openEditPostDialog: evt => dispatch(Actions.openEditPostDialog(evt)),
     dispatchDeletePostAction: evt => dispatch(Actions.deletePost(evt)),
   };
@@ -181,6 +221,7 @@ const withConnect = connect(
 );
 
 export default compose(
+  withRouter,
   withConnect,
   memo,
 )(PostsList);

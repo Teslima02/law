@@ -21,6 +21,12 @@ import {
   DELETE_POST,
   DELETE_POST_SUCCESS,
   DELETE_POST_ERROR,
+  ATTENDEES_VIEW,
+  ATTENDEES_VIEW_SUCCESS,
+  ATTENDEES_VIEW_ERROR,
+  ATTENDEES_LIST,
+  ATTENDEES_LIST_SUCCESS,
+  ATTENDEES_LIST_ERROR,
 } from './constants';
 
 export function openNewPostDialog() {
@@ -127,6 +133,34 @@ export function deletePostSuccess(data) {
 export function deletePostError(data) {
   return {
     type: DELETE_POST_ERROR,
+    payload: data,
+  };
+}
+
+export function viewAttendees(data) {
+  // console.log(data, 'data view')
+  return {
+    type: ATTENDEES_VIEW,
+    payload: data,
+  };
+}
+
+export function getAttendeesList() {
+  return {
+    type: ATTENDEES_LIST,
+  };
+}
+
+export function getAttendeesListSuccess(data) {
+  return {
+    type: ATTENDEES_LIST_SUCCESS,
+    payload: data,
+  };
+}
+
+export function getAttendeesListError(data) {
+  return {
+    type: ATTENDEES_LIST_ERROR,
     payload: data,
   };
 }

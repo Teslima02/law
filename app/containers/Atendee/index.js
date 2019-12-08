@@ -29,7 +29,6 @@ export function Atendee(props) {
     dispatchAttendeesAction();
   }, []);
 
-
   return (
     <div>
       <Helmet>

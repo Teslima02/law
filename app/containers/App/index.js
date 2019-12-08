@@ -17,6 +17,7 @@ import { createStructuredSelector } from 'reselect';
 import HomePage from '../HomePage/Loadable';
 import NotFoundPage from '../NotFoundPage/Loadable';
 import AllPosts from '../AllPosts/Loadable';
+import AttendeeList from '../AllPosts/components/AttendeesList';
 import Attendee from '../Atendee/Loadable';
 import LoginPage from '../LoginPage/Loadable';
 import Layout1 from '../../components/layouts/layout1/Layout1';
@@ -58,6 +59,7 @@ const App = () => {
                   <PrivateRoute path="/posts" component={AllPosts} /> */}
                   {/* <PrivateRoute path="/admins" component={AdminsPage} /> */}
                   <Route path="/talks" component={AllPosts} />
+                  <Route exact path="/talk/:id" component={AttendeeList} />
                   <Route exact path="/attendees" component={Attendee} />
                   <Route exact path="/" component={HomePage} />
                 </Layout1>

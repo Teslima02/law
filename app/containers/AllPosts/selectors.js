@@ -63,8 +63,22 @@ const makeSelectPostData = () =>
     subState => subState.postData,
   );
 
+const makeSelectAttendeesView = () =>
+  createSelector(
+    selectAllPostsDomain,
+    subState => subState.attendeesView,
+  );
+
+const makeSelectGetAttendeesList = () =>
+  createSelector(
+    selectAllPostsDomain,
+    subState => subState.attendeesList,
+  );
+
 export default makeSelectAllPosts;
 export {
+  makeSelectAttendeesView,
+  makeSelectGetAttendeesList,
   makeSelectPostData,
   makeSelectEditPost,
   makeSelectNewPost,

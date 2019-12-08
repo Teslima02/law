@@ -4,9 +4,11 @@ import {
   SAVE_NEW_POST,
   UPDATE_POST,
   DELETE_POST,
+  ATTENDEES_LIST,
 } from './constants';
 import request from '../../utils/request';
 import * as Actions from './actions';
+import * as AttendeesActions from '../Atendee/actions';
 
 import * as Selectors from './selectors';
 import { BaseUrl } from '../../components/BaseUrl';
@@ -18,7 +20,7 @@ export function* getAllPosts() {
   try {
     const allPostsResponse = yield call(request, requestURL);
 
-    console.log(allPostsResponse, 'allPostsResponse');
+    // console.log(allPostsResponse, 'allPostsResponse');
     yield put(Actions.allPostsSuccess(allPostsResponse));
   } catch (err) {
     yield put(Actions.allPostsError(err));
@@ -96,9 +98,26 @@ export function* deletePost() {
   }
 }
 
+export function* attendeesList() {
+  const talkId = yield select(Selectors.makeSelectAttendeesView());
+
+  // eslint-disable-next-line no-underscore-dangle
+  const requestURL = `${BaseUrl}/talk/${talkId._id}`;
+
+  try {
+    const deletePostsRequ = yield call(request, requestURL);
+
+    // yield put(AttendeesActions.allAttendees());
+    yield put(Actions.getAttendeesListSuccess(deletePostsRequ.talk));
+  } catch (err) {
+    yield put(Actions.getAttendeesListError(err));
+  }
+}
+
 export default function* posts() {
   yield takeLatest(GET_ALL_POSTS, getAllPosts);
   yield takeLatest(SAVE_NEW_POST, saveNewPost);
   yield takeLatest(UPDATE_POST, updatePost);
   yield takeLatest(DELETE_POST, deletePost);
+  yield takeLatest(ATTENDEES_LIST, attendeesList);
 }

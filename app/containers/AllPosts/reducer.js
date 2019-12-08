@@ -21,12 +21,19 @@ import {
   DELETE_POST,
   DELETE_POST_SUCCESS,
   DELETE_POST_ERROR,
+  ATTENDEES_VIEW,
+  ATTENDEES_VIEW_SUCCESS,
+  ATTENDEES_VIEW_ERROR,
+  ATTENDEES_LIST,
+  ATTENDEES_LIST_SUCCESS,
+  ATTENDEES_LIST_ERROR,
 } from './constants';
 
 export const initialState = {
   getAllPosts: [],
+  attendeesList: [],
   newPost: {},
-  // updatePost: {},
+  attendeesView: {},
   postData: {},
   loading: false,
   error: false,
@@ -178,6 +185,34 @@ const allPostsReducer = (state = initialState, action) =>
         };
       }
       case DELETE_POST_ERROR: {
+        return {
+          ...state,
+          loading: false,
+          error: true,
+        };
+      }
+      case ATTENDEES_VIEW: {
+        return {
+          ...state,
+          attendeesView: action.payload,
+        };
+      }
+      case ATTENDEES_LIST: {
+        return {
+          ...state,
+          loading: true,
+          error: false,
+        };
+      }
+      case ATTENDEES_LIST_SUCCESS: {
+        return {
+          ...state,
+          loading: false,
+          error: false,
+          attendeesList: action.payload,
+        };
+      }
+      case ATTENDEES_LIST_ERROR: {
         return {
           ...state,
           loading: false,

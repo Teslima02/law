@@ -184,7 +184,7 @@ const PostsDialog = props => {
       </Dialog>
     </div>
   );
-}
+};
 
 PostsDialog.propTypes = {
   dispatchNewPostAction: PropTypes.func,

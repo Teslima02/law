@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const Talk = require('../../models/v1/talk');
+const Attendee = require('../../models/v1/attendee');
 const router = Router();
 
 /* eslint-disable no-underscore-dangle */
@@ -36,25 +37,20 @@ router.put('/:id', (req, res) => {
   const { id } = req.params;
   const { title, content } = req.body;
 
-  Talk.findByIdAndUpdate(
-    id,
-    { title, content },
-    { new: true },
-    (err, data) => {
-      if (err) {
-        res.status(500).json({
-          success: false,
-          message: 'Unable to Update Talk',
-        });
-        return;
-      }
-      res.status(200).json({
-        success: true,
-        message: 'Talk Updated Successfully',
-        data,
+  Talk.findByIdAndUpdate(id, { title, content }, { new: true }, (err, data) => {
+    if (err) {
+      res.status(500).json({
+        success: false,
+        message: 'Unable to Update Talk',
       });
-    },
-  );
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      message: 'Talk Updated Successfully',
+      data,
+    });
+  });
 });
 
 router.delete('/:id', (req, res) => {
@@ -70,6 +66,24 @@ router.delete('/:id', (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Talk Deleted Successfully',
+    });
+  });
+});
+
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+  Talk.findById(id).exec((err1, talk) => {
+    if (err1) {
+      res.status(400).json({
+        success: false,
+        message: 'Unable to Fetch Talk',
+      });
+      return;
+    }
+    res.status(200).json({
+      success: true,
+      // message: 'Talk Deleted Successfully',
+      talk,
     });
   });
 });

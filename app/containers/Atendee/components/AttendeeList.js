@@ -167,7 +167,7 @@ const AttendeeList = props => {
 };
 
 AttendeeList.propTypes = {
-  getAllAttendees: PropTypes.array.isRequired,
+  getAllAttendees: PropTypes.array,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   dispatchDeletePostAction: PropTypes.oneOfType([

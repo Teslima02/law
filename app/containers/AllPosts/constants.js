@@ -24,3 +24,11 @@ export const UPDATE_POST_ERROR = 'app/AllPosts/UPDATE_POST_ERROR';
 export const DELETE_POST = 'app/AllPosts/DELETE_POST';
 export const DELETE_POST_SUCCESS = 'app/AllPosts/DELETE_POST_SUCCESS';
 export const DELETE_POST_ERROR = 'app/AllPosts/DELETE_POST_ERROR';
+
+export const ATTENDEES_VIEW = 'app/AllPosts/ATTENDEES_VIEW';
+export const ATTENDEES_VIEW_SUCCESS = 'app/AllPosts/ATTENDEES_VIEW_SUCCESS';
+export const ATTENDEES_VIEW_ERROR = 'app/AllPosts/ATTENDEES_VIEW_ERROR';
+
+export const ATTENDEES_LIST = 'app/AllPosts/ATTENDEES_LIST';
+export const ATTENDEES_LIST_SUCCESS = 'app/AllPosts/ATTENDEES_LIST_SUCCESS';
+export const ATTENDEES_LIST_ERROR = 'app/AllPosts/ATTENDEES_LIST_ERROR';
