@@ -75,8 +75,22 @@ const makeSelectGetAttendeesList = () =>
     subState => subState.attendeesList,
   );
 
+const makeSelectNewAttendee = () =>
+  createSelector(
+    selectAllPostsDomain,
+    subState => subState.newAttendee,
+  );
+
+const makeSelectAddAttendeeDialog = () =>
+  createSelector(
+    selectAllPostsDomain,
+    subState => subState.attendeeDialog,
+  );
+
 export default makeSelectAllPosts;
 export {
+  makeSelectNewAttendee,
+  makeSelectAddAttendeeDialog,
   makeSelectAttendeesView,
   makeSelectGetAttendeesList,
   makeSelectPostData,

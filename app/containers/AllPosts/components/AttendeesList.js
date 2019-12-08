@@ -7,30 +7,18 @@ import { withRouter } from 'react-router';
 
 import { FormControlLabel, Icon, List } from '@material-ui/core';
 import MUIDataTable from 'mui-datatables';
-import AddButton from './AddButton';
+import AddAttendee from './AddAttendee';
 import * as Selectors from '../selectors';
-import * as AttendeesSelectors from '../../Atendee/selectors';
 import * as Actions from '../actions';
-import * as AttendeesActions from '../../Atendee/actions';
 import LoadingIndicator from '../../../components/LoadingIndicator';
+import AttendeesDialog from './AttendeesDialog';
 
 const AttendeesList = props => {
-  const {
-    getAttendeesAction,
-    allAttendees,
-    getAttendeesListAction,
-    getAttendeesList,
-    loading,
-    error,
-  } = props;
+  const { getAttendeesListAction, getAttendeesList, loading, error } = props;
 
   useEffect(() => {
     getAttendeesListAction();
-    getAttendeesAction();
   }, []);
-
-  console.log(allAttendees, 'allAttendees');
-  console.log(getAttendeesList, 'getAttendeesList');
 
   const columns = [
     {
@@ -52,16 +40,24 @@ const AttendeesList = props => {
       },
     },
     {
-      name: 'title',
-      label: 'Tittle',
+      name: 'firstName',
+      label: 'First Name',
       options: {
         filter: true,
         sort: false,
       },
     },
     {
-      name: 'content',
-      label: 'Content',
+      name: 'lastName',
+      label: 'Last Name',
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: 'email',
+      label: 'Email',
       options: {
         filter: true,
         sort: false,
@@ -73,7 +69,7 @@ const AttendeesList = props => {
     filterType: 'checkbox',
     responsive: 'scrollMaxHeight',
     selectableRows: 'none',
-    customToolbar: () => <AddButton />,
+    customToolbar: () => <AddAttendee />,
   };
 
   if (loading) {
@@ -84,10 +80,12 @@ const AttendeesList = props => {
     <div>
       <MUIDataTable
         title="All Talks"
-        data={getAttendeesList.users}
+        data={getAttendeesList.talk && getAttendeesList.talk.users}
         columns={columns}
         options={options}
       />
+
+      <AttendeesDialog allAttendees={getAttendeesList.attendees} />
     </div>
   );
 };
@@ -97,15 +95,12 @@ AttendeesList.propTypes = {
     PropTypes.object,
     PropTypes.func,
   ]),
-  getAttendeesAction: PropTypes.func,
   getAttendeesList: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
-  allAttendees: PropTypes.array,
   loading: PropTypes.bool,
   error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
 };
 
 const mapStateToProps = createStructuredSelector({
-  allAttendees: AttendeesSelectors.makeSelectGetAllAttendees(),
   loading: Selectors.makeSelectLoading(),
   error: Selectors.makeSelectError(),
   getAttendeesList: Selectors.makeSelectGetAttendeesList(),
@@ -114,7 +109,6 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     getAttendeesListAction: () => dispatch(Actions.getAttendeesList()),
-    getAttendeesAction: () => dispatch(AttendeesActions.allAttendees()),
   };
 }
 

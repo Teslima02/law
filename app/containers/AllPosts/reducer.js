@@ -22,14 +22,18 @@ import {
   DELETE_POST_SUCCESS,
   DELETE_POST_ERROR,
   ATTENDEES_VIEW,
-  ATTENDEES_VIEW_SUCCESS,
-  ATTENDEES_VIEW_ERROR,
   ATTENDEES_LIST,
   ATTENDEES_LIST_SUCCESS,
   ATTENDEES_LIST_ERROR,
+  OPEN_ADD_ATTENDEE_DIALOG,
+  CLOSE_ADD_ATTENDEE_DIALOG,
+  SAVE_ATTENDEE,
+  SAVE_ATTENDEE_SUCCESS,
+  SAVE_ATTENDEE_ERROR,
 } from './constants';
 
 export const initialState = {
+  newAttendee: {},
   getAllPosts: [],
   attendeesList: [],
   newPost: {},
@@ -38,6 +42,13 @@ export const initialState = {
   loading: false,
   error: false,
   postDialog: {
+    type: 'new',
+    props: {
+      open: false,
+    },
+    data: null,
+  },
+  attendeeDialog: {
     type: 'new',
     props: {
       open: false,
@@ -213,6 +224,52 @@ const allPostsReducer = (state = initialState, action) =>
         };
       }
       case ATTENDEES_LIST_ERROR: {
+        return {
+          ...state,
+          loading: false,
+          error: true,
+        };
+      }
+      case OPEN_ADD_ATTENDEE_DIALOG: {
+        return {
+          ...state,
+          attendeeDialog: {
+            type: 'new',
+            props: {
+              open: true,
+            },
+            data: null,
+          },
+        };
+      }
+      case CLOSE_ADD_ATTENDEE_DIALOG: {
+        return {
+          ...state,
+          attendeeDialog: {
+            type: 'new',
+            props: {
+              open: false,
+            },
+            data: null,
+          },
+        };
+      }
+      case SAVE_ATTENDEE: {
+        return {
+          ...state,
+          loading: true,
+          error: false,
+          newAttendee: action.payload,
+        };
+      }
+      case SAVE_ATTENDEE_SUCCESS: {
+        return {
+          ...state,
+          loading: false,
+          error: false,
+        };
+      }
+      case SAVE_ATTENDEE_ERROR: {
         return {
           ...state,
           loading: false,

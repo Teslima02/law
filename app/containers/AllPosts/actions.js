@@ -22,11 +22,14 @@ import {
   DELETE_POST_SUCCESS,
   DELETE_POST_ERROR,
   ATTENDEES_VIEW,
-  ATTENDEES_VIEW_SUCCESS,
-  ATTENDEES_VIEW_ERROR,
   ATTENDEES_LIST,
   ATTENDEES_LIST_SUCCESS,
   ATTENDEES_LIST_ERROR,
+  OPEN_ADD_ATTENDEE_DIALOG,
+  CLOSE_ADD_ATTENDEE_DIALOG,
+  SAVE_ATTENDEE,
+  SAVE_ATTENDEE_SUCCESS,
+  SAVE_ATTENDEE_ERROR,
 } from './constants';
 
 export function openNewPostDialog() {
@@ -138,7 +141,6 @@ export function deletePostError(data) {
 }
 
 export function viewAttendees(data) {
-  // console.log(data, 'data view')
   return {
     type: ATTENDEES_VIEW,
     payload: data,
@@ -161,6 +163,40 @@ export function getAttendeesListSuccess(data) {
 export function getAttendeesListError(data) {
   return {
     type: ATTENDEES_LIST_ERROR,
+    payload: data,
+  };
+}
+
+export function openAddAttendeeDialog() {
+  return {
+    type: OPEN_ADD_ATTENDEE_DIALOG,
+  };
+}
+
+export function closeAddAttendeeDialog() {
+  return {
+    type: CLOSE_ADD_ATTENDEE_DIALOG,
+  };
+}
+
+export function saveAttendee(data) {
+  console.log(data, 'data')
+  return {
+    type: SAVE_ATTENDEE,
+    payload: data,
+  };
+}
+
+export function saveAttendeeSuccess(data) {
+  return {
+    type: SAVE_ATTENDEE_SUCCESS,
+    payload: data,
+  };
+}
+
+export function saveAttendeeError(data) {
+  return {
+    type: SAVE_ATTENDEE_ERROR,
     payload: data,
   };
 }

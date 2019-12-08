@@ -5,6 +5,7 @@ import {
   UPDATE_POST,
   DELETE_POST,
   ATTENDEES_LIST,
+  SAVE_ATTENDEE,
 } from './constants';
 import request from '../../utils/request';
 import * as Actions from './actions';
@@ -107,12 +108,37 @@ export function* attendeesList() {
   try {
     const deletePostsRequ = yield call(request, requestURL);
 
-    // yield put(AttendeesActions.allAttendees());
-    yield put(Actions.getAttendeesListSuccess(deletePostsRequ.talk));
+    yield put(Actions.getAttendeesListSuccess(deletePostsRequ));
   } catch (err) {
     yield put(Actions.getAttendeesListError(err));
   }
 }
+
+export function* saveAttendee() {
+  const newPostData = yield select(Selectors.makeSelectNewAttendee());
+
+  const requestURL = `${BaseUrl}/talk/`;
+
+  try {
+    const newPostsRequ = yield call(request, requestURL, {
+      method: 'POST',
+      body: JSON.stringify(newPostData),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Credentials': true,
+        // 'Access-Control-Allow-Origin': '*',
+        // Authorization: `Bearer ${token}`,
+      },
+    });
+
+    yield put(Actions.allPosts());
+    yield put(Actions.saveNewPostSuccess(newPostsRequ.data));
+  } catch (err) {
+    yield put(Actions.saveNewPostError(err));
+  }
+}
+
 
 export default function* posts() {
   yield takeLatest(GET_ALL_POSTS, getAllPosts);
@@ -120,4 +146,5 @@ export default function* posts() {
   yield takeLatest(UPDATE_POST, updatePost);
   yield takeLatest(DELETE_POST, deletePost);
   yield takeLatest(ATTENDEES_LIST, attendeesList);
+  yield takeLatest(SAVE_ATTENDEE, saveAttendee);
 }

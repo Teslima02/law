@@ -26,9 +26,15 @@ export const DELETE_POST_SUCCESS = 'app/AllPosts/DELETE_POST_SUCCESS';
 export const DELETE_POST_ERROR = 'app/AllPosts/DELETE_POST_ERROR';
 
 export const ATTENDEES_VIEW = 'app/AllPosts/ATTENDEES_VIEW';
-export const ATTENDEES_VIEW_SUCCESS = 'app/AllPosts/ATTENDEES_VIEW_SUCCESS';
-export const ATTENDEES_VIEW_ERROR = 'app/AllPosts/ATTENDEES_VIEW_ERROR';
 
 export const ATTENDEES_LIST = 'app/AllPosts/ATTENDEES_LIST';
 export const ATTENDEES_LIST_SUCCESS = 'app/AllPosts/ATTENDEES_LIST_SUCCESS';
 export const ATTENDEES_LIST_ERROR = 'app/AllPosts/ATTENDEES_LIST_ERROR';
+
+export const OPEN_ADD_ATTENDEE_DIALOG = 'app/AllPosts/OPEN_ADD_ATTENDEE_DIALOG';
+export const CLOSE_ADD_ATTENDEE_DIALOG =
+  'app/AllPosts/CLOSE_ADD_ATTENDEE_DIALOG';
+
+export const SAVE_ATTENDEE = 'app/AllPosts/SAVE_ATTENDEE';
+export const SAVE_ATTENDEE_SUCCESS = 'app/AllPosts/SAVE_ATTENDEE_SUCCESS';
+export const SAVE_ATTENDEE_ERROR = 'app/AllPosts/SAVE_ATTENDEE_ERROR';

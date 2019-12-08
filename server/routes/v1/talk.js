@@ -72,18 +72,22 @@ router.delete('/:id', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  Talk.findById(id).exec((err1, talk) => {
-    if (err1) {
-      res.status(400).json({
-        success: false,
-        message: 'Unable to Fetch Talk',
+
+  Attendee.find().exec((err, attendees) => {
+    Talk.findById(id).exec((err1, talk) => {
+      if (err1) {
+        res.status(400).json({
+          success: false,
+          message: 'Unable to Fetch Talk',
+        });
+        return;
+      }
+      res.status(200).json({
+        success: true,
+        // message: 'Talk Deleted Successfully',
+        talk,
+        attendees,
       });
-      return;
-    }
-    res.status(200).json({
-      success: true,
-      // message: 'Talk Deleted Successfully',
-      talk,
     });
   });
 });
