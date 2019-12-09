@@ -213,6 +213,7 @@ const allPostsReducer = (state = initialState, action) =>
           ...state,
           loading: true,
           error: false,
+          attendeesView: action.payload,
         };
       }
       case ATTENDEES_LIST_SUCCESS: {

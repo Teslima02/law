@@ -14,11 +14,22 @@ import LoadingIndicator from '../../../components/LoadingIndicator';
 import AttendeesDialog from './AttendeesDialog';
 
 const AttendeesList = props => {
-  const { getAttendeesListAction, getAttendeesList, loading, error } = props;
+  const {
+    match,
+    openViewAttendees,
+    getTalkDetails,
+    getAttendeesListAction,
+    getAttendeesList,
+    loading,
+    error,
+  } = props;
 
   useEffect(() => {
-    getAttendeesListAction();
+    getAttendeesListAction(match.params.id);
+    openViewAttendees(match.params.id);
   }, []);
+
+  console.log(getAttendeesList, 'getAttendeesList');
 
   const columns = [
     {
@@ -85,12 +96,17 @@ const AttendeesList = props => {
         options={options}
       />
 
-      <AttendeesDialog allAttendees={getAttendeesList.attendees} />
+      <AttendeesDialog
+        allAttendees={getAttendeesList.attendees}
+        getTalkDetails={getTalkDetails}
+      />
     </div>
   );
 };
 
 AttendeesList.propTypes = {
+  openViewAttendees: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  getTalkDetails: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   getAttendeesListAction: PropTypes.oneOfType([
     PropTypes.object,
     PropTypes.func,
@@ -104,11 +120,13 @@ const mapStateToProps = createStructuredSelector({
   loading: Selectors.makeSelectLoading(),
   error: Selectors.makeSelectError(),
   getAttendeesList: Selectors.makeSelectGetAttendeesList(),
+  getTalkDetails: Selectors.makeSelectAttendeesView(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAttendeesListAction: () => dispatch(Actions.getAttendeesList()),
+    openViewAttendees: evt => dispatch(Actions.viewAttendees(evt)),
+    getAttendeesListAction: evt => dispatch(Actions.getAttendeesList(evt)),
   };
 }
 

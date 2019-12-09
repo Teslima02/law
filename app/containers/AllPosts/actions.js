@@ -147,9 +147,10 @@ export function viewAttendees(data) {
   };
 }
 
-export function getAttendeesList() {
+export function getAttendeesList(data) {
   return {
     type: ATTENDEES_LIST,
+    payload: data,
   };
 }
 

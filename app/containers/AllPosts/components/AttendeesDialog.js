@@ -49,6 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 const AttendeesDialog = props => {
   const {
+    getTalkDetails,
     allAttendees,
     attendeeDialog,
     closeAddAttendeeDialog,
@@ -57,7 +58,8 @@ const AttendeesDialog = props => {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
-    _id: '',
+    // eslint-disable-next-line no-underscore-dangle
+    attendeeId: '',
   });
 
   const handleChange = name => event => {
@@ -75,7 +77,7 @@ const AttendeesDialog = props => {
     attendeeDialog.type === 'new' ? closeAddAttendeeDialog() : '';
   };
 
-  console.log(allAttendees, 'allAttendees');
+  // console.log(allAttendees, 'allAttendees');
 
   return (
     <div>
@@ -100,22 +102,20 @@ const AttendeesDialog = props => {
                 <InputLabel id="attendee-label">Select Attendee</InputLabel>
                 <Select
                   labelId="attendee-label"
-                  id="demo-simple-select-helper"
-                  value={values}
-                  fullWidth
-                  onChange={handleChange('_id')}
+                  id="attendee-label"
+                  value={values.attendeeId}
+                  // onChange={handleChange}
+                  onChange={handleChange('attendeeId')}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
                   {allAttendees &&
+                    // eslint-disable-next-line no-unused-vars
                     allAttendees.map((attendee, index) => (
-                      <MenuItem key={attendee._id} value={attendee._id}>
+                      // eslint-disable-next-line no-underscore-dangle
+                      <MenuItem key={index} value={attendee._id}>
                         {attendee.firstName} {attendee.lastName}
                       </MenuItem>
                     ))}
                 </Select>
-                <FormHelperText>Select Attendee</FormHelperText>
               </FormControl>
             </div>
           ) : (
@@ -151,6 +151,7 @@ const AttendeesDialog = props => {
 };
 
 AttendeesDialog.propTypes = {
+  getTalkDetails: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
   allAttendees: PropTypes.array,
   getAttendeesAction: PropTypes.func,
   dispatchAddAttendeeAction: PropTypes.func,

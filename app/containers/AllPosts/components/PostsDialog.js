@@ -68,7 +68,7 @@ const PostsDialog = props => {
     setValues({
       ...postDialog.data,
     });
-  }, [postDialog.data]);
+  }, [postDialog && postDialog.data]);
 
   const closeComposeDialog = () => {
     // eslint-disable-next-line no-unused-expressions

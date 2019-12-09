@@ -89,58 +89,58 @@ const AttendeeList = props => {
         sort: false,
       },
     },
-    {
-      name: '_id',
-      label: 'Edit',
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRender: value => {
-          // eslint-disable-next-line no-underscore-dangle
-          const Post = getAllAttendees.find(post => value === post._id);
+    // {
+    //   name: '_id',
+    //   label: 'Edit',
+    //   options: {
+    //     filter: true,
+    //     sort: false,
+    //     customBodyRender: value => {
+    //       // eslint-disable-next-line no-underscore-dangle
+    //       const Post = getAllAttendees.find(post => value === post._id);
 
-          if (value === '') {
-            return '';
-          }
-          return (
-            <FormControlLabel
-              label="Edit"
-              control={<Icon>create</Icon>}
-              onClick={evt => {
-                evt.stopPropagation();
-                openEditPostDialog(Post);
-              }}
-            />
-          );
-        },
-      },
-    },
-    {
-      name: '_id',
-      label: 'Delete',
-      options: {
-        filter: true,
-        sort: false,
-        customBodyRender: value => {
-          // eslint-disable-next-line no-underscore-dangle
-          const Post = getAllAttendees.find(post => value === post._id);
+    //       if (value === '') {
+    //         return '';
+    //       }
+    //       return (
+    //         <FormControlLabel
+    //           label="Edit"
+    //           control={<Icon>create</Icon>}
+    //           onClick={evt => {
+    //             evt.stopPropagation();
+    //             openEditPostDialog(Post);
+    //           }}
+    //         />
+    //       );
+    //     },
+    //   },
+    // },
+    // {
+    //   name: '_id',
+    //   label: 'Delete',
+    //   options: {
+    //     filter: true,
+    //     sort: false,
+    //     customBodyRender: value => {
+    //       // eslint-disable-next-line no-underscore-dangle
+    //       const Post = getAllAttendees.find(post => value === post._id);
 
-          if (value === '') {
-            return '';
-          }
-          return (
-            <FormControlLabel
-              label="Delete"
-              control={<Icon>delete</Icon>}
-              onClick={evt => {
-                evt.stopPropagation();
-                dispatchDeletePostAction(Post);
-              }}
-            />
-          );
-        },
-      },
-    },
+    //       if (value === '') {
+    //         return '';
+    //       }
+    //       return (
+    //         <FormControlLabel
+    //           label="Delete"
+    //           control={<Icon>delete</Icon>}
+    //           onClick={evt => {
+    //             evt.stopPropagation();
+    //             dispatchDeletePostAction(Post);
+    //           }}
+    //         />
+    //       );
+    //     },
+    //   },
+    // },
   ];
 
   const options = {

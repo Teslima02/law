@@ -103,7 +103,7 @@ export function* attendeesList() {
   const talkId = yield select(Selectors.makeSelectAttendeesView());
 
   // eslint-disable-next-line no-underscore-dangle
-  const requestURL = `${BaseUrl}/talk/${talkId._id}`;
+  const requestURL = `${BaseUrl}/talk/${talkId}`;
 
   try {
     const deletePostsRequ = yield call(request, requestURL);
@@ -115,30 +115,29 @@ export function* attendeesList() {
 }
 
 export function* saveAttendee() {
-  const newPostData = yield select(Selectors.makeSelectNewAttendee());
+  const talkId = yield select(Selectors.makeSelectAttendeesView());
+  const newAttendee = yield select(Selectors.makeSelectNewAttendee());
 
-  const requestURL = `${BaseUrl}/talk/`;
+  // eslint-disable-next-line no-underscore-dangle
+  const requestURL = `${BaseUrl}/talk/add/attendee/${talkId}`;
 
   try {
     const newPostsRequ = yield call(request, requestURL, {
       method: 'POST',
-      body: JSON.stringify(newPostData),
+      body: JSON.stringify(newAttendee),
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
         'Access-Control-Allow-Credentials': true,
-        // 'Access-Control-Allow-Origin': '*',
-        // Authorization: `Bearer ${token}`,
       },
     });
 
-    yield put(Actions.allPosts());
-    yield put(Actions.saveNewPostSuccess(newPostsRequ.data));
+    yield put(Actions.getAttendeesList(talkId));
+    yield put(Actions.getAttendeesListSuccess(newPostsRequ.data));
   } catch (err) {
-    yield put(Actions.saveNewPostError(err));
+    yield put(Actions.getAttendeesListError(err));
   }
 }
-
 
 export default function* posts() {
   yield takeLatest(GET_ALL_POSTS, getAllPosts);

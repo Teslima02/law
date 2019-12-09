@@ -99,9 +99,10 @@ const PostsList = props => {
               color="primary"
               onClick={ev => {
                 ev.stopPropagation();
-                openViewAttendees(getTalkID);
                 // eslint-disable-next-line no-underscore-dangle
-                handleClick(getTalkID._id);
+                openViewAttendees(value);
+                // eslint-disable-next-line no-underscore-dangle
+                handleClick(value);
               }}
             >
               <Icon>visibility</Icon>

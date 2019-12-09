@@ -4,7 +4,7 @@ const Talk = new Schema(
   {
     title: { type: String, required: true },
     content: { type: String, required: true },
-    users: { type: [Schema.Types.ObjectId], ref: 'attendees' },
+    users: [{ type: Schema.Types.ObjectId, ref: 'attendees' }],
   },
   { timestamps: true },
 );

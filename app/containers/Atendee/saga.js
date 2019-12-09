@@ -18,7 +18,6 @@ export function* getAllAttendees() {
   try {
     const allAttendeesResponse = yield call(request, requestURL);
 
-    console.log(allAttendeesResponse, 'allAttendeesResponse');
     yield put(Actions.allAttendeesSuccess(allAttendeesResponse));
   } catch (err) {
     yield put(Actions.allAttendeesError(err));
